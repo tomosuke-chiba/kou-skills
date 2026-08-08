@@ -8,7 +8,7 @@
 
 ## コアメンバー向けインストール手順
 
-> ⚠️ 共通の前提: このリポは private です。事前に GitHub アカウントが collaborator 招待を受けており、お使いのMacで GitHub 認証（`gh auth login` または git の認証設定）が済んでいる必要があります。
+> このリポは public です。GitHub の招待や認証設定は不要で、誰でもそのままインストールできます。
 
 ### A. ターミナル版 Claude Code の人
 
