@@ -8,10 +8,41 @@
 
 ## コアメンバー向けインストール手順
 
+> ⚠️ 共通の前提: このリポは private です。事前に GitHub アカウントが collaborator 招待を受けており、お使いのMacで GitHub 認証（`gh auth login` または git の認証設定）が済んでいる必要があります。
+
+### A. ターミナル版 Claude Code の人
+
 ```
 /plugin marketplace add tomosuke-chiba/kou-claude-plugins
 /plugin install goal-align@kou-plugins
 ```
+
+### B. デスクトップアプリの人（/plugin が使えない環境）
+
+デスクトップアプリでは `/plugin` コマンドは使えません。次のどちらかで導入します。
+
+**B-1. いちばん簡単: 下のプロンプトを Claude にそのまま貼る**
+
+```
+次のプラグインを導入してください。
+1. ~/.claude/settings.json（なければ作成）に以下をマージする（既存の設定は消さない）:
+{
+  "extraKnownMarketplaces": {
+    "kou-plugins": {
+      "source": { "source": "github", "repo": "tomosuke-chiba/kou-claude-plugins" }
+    }
+  },
+  "enabledPlugins": ["goal-align@kou-plugins"]
+}
+2. マージ後、settings.json が有効なJSONであることを確認して報告してください。
+3. 反映にはアプリの再起動（新しいセッション）が必要な旨も教えてください。
+```
+
+**B-2. アプリのプラグインブラウザから**
+
+デスクトップアプリのプラグイン画面（Plugin Browser）でこのマーケットプレイスを追加し、`goal-align` をインストールします。
+
+導入後は新しいチャットで `/align-dod-solve` が使えれば成功です。
 
 ## 基本フロー
 
