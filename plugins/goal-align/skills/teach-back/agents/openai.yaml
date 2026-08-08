@@ -1,0 +1,4 @@
+interface:
+  display_name: "Teach Back"
+  short_description: "計画を自分の言葉で説明し、理解不足を採点・再学習する"
+  default_prompt: "Use $teach-back to verify my understanding of this plan before implementation."

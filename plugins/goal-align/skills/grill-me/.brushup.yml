@@ -1,0 +1,16 @@
+name: grill-me
+type: skill
+description: "現在地・定量ゴール・ルート・評価項目を調査と対話で揃えるGoogleマップ型壁打ちスキル"
+managed: true
+feedback_interval_days: 30   # G2=30日（判断3A）
+evaluation_axes:             # スキル4軸から適用軸を選択（判断1A）
+  - S1                       # 起動精度
+  - S2                       # 出力品質の安定性
+  - S3                       # 手戻り率
+  # S4は対象外: 安全装置なしスキル（質問のみで書き込み・送信操作なし）のためN/A
+status: active
+repo: global                 # グローバル自作スキル（~/.claude/skills配下）
+path: ~/.claude/skills/grill-me
+group: G2                    # 単発・季節性・安定スキル
+architecture: docs/architecture.mmd
+outputs_dir: outputs/        # ビフォーアフター確認用サンプル

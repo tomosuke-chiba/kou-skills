@@ -1,0 +1,4 @@
+interface:
+  display_name: "Grill Me"
+  short_description: "現在地・定量ゴール・ルートを揃え、共通の地図へ固定する"
+  default_prompt: "Use $grill-me to research my current position, define a measurable goal, compare routes and evaluation criteria, and produce or update one self-contained map without starting implementation."

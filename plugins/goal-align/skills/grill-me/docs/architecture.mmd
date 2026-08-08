@@ -1,0 +1,36 @@
+flowchart TD
+    Start["ユーザー発話: grill me / 壁打ち / 事業相談"] --> Contract["handoff-contractを読む"]
+    Contract --> Profile{"事業・WIG・KPI文脈?"}
+    Profile -->|Yes| WIG["business-wig-mapを読む"]
+    Profile -->|No| Theme
+    WIG --> Theme["テーマと既存の地図ファイルを固定"]
+    Theme --> Draft["現在地・ゴール・ルート・道路事情を仮置き"]
+    Draft --> Research["リポジトリと正本を先に調査"]
+    Research --> External{"外部へ広げる必要?"}
+    External -->|Yes| Permission["必要性と対象を示し許可を待つ"]
+    External -->|No| Sort
+    Permission --> Research
+    Sort["重要な解釈差と依存関係を整理"] --> Bundle{"独立質問がある?"}
+    Bundle -->|Yes| Batch["UI上限までまとめて質問"]
+    Bundle -->|No| Single["依存の上流だけ質問"]
+    Batch --> Update["回答・調査で地図を更新"]
+    Single --> Update
+    Update --> Done{"地図の完了条件を満たす?"}
+    Done -->|No| Sort
+    Done -->|Yes| File["1テーマ1ファイルを作成・更新"]
+    File --> Playback["30秒の地図を再提示・訂正反映"]
+    Playback --> Confirm["ユーザーの訂正・確認を受ける"]
+    Confirm --> Risk{"重要・高影響?"}
+    Risk -->|Yes| Teach["Teach-backを実行"]
+    Risk -->|No| Offer["Teach-backを一度だけ確認"]
+    Offer -->|実行| Teach
+    Offer -->|省略| Gate["4品質ゲートを確認"]
+    Teach --> Pass{"通過?"}
+    Pass -->|No| Repair["不足部分だけ再学習"]
+    Repair --> Teach
+    Pass -->|Yes| Gate
+    Gate --> Stop["地図確定で停止。実装は次の依頼"]
+
+    style File fill:#d4edda
+    style Teach fill:#fff3cd
+    style Stop fill:#d4edda
