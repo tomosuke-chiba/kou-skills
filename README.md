@@ -79,7 +79,21 @@ Codex には Claude Code の「Skillツール」が無いため、スキル間�
 ## 既存インストール者のアップデート方法
 
 - **Claude Code（ターミナル）**: `/plugin marketplace update kou-plugins` → プラグインを更新
-- **デスクトップアプリ（settings.json方式）**: マーケットプレイスの更新後に新しいセッションを開始
+- **デスクトップアプリ**: 次のプロンプトを Claude にそのまま貼る:
+
+```
+Claude Codeプラグイン「goal-align@kou-plugins」を最新版にアップデートしてください。
+
+1. ~/.claude/plugins/marketplaces/kou-plugins ディレクトリが存在するか確認する
+   （なければ ~/.claude/plugins/known_marketplaces.json から kou-plugins の
+   installLocation を調べて、そのディレクトリを対象にする）
+2. そのディレクトリで git pull を実行する
+3. 更新後、plugins/goal-align/.claude-plugin/plugin.json の version を表示して
+   報告する（0.2.0 以上になっていれば成功）
+4. 見つからない・失敗した場合は、エラー内容だけ報告して他の方法を勝手に試さない
+5. 成功したら「アプリを再起動して新しいチャットから新スキルが使えます」と案内する
+```
+
 - **Codex**: `git -C kou-claude-plugins pull` → `bash kou-claude-plugins/install-codex.sh --update`（既存スキルも最新化。シムリンク運用のものは触りません）
 
 ## 基本フロー
