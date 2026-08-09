@@ -1,9 +1,16 @@
 #!/bin/bash
-# goal-align スキル7本を Codex 用にインストールする
+# goal-align スキルを Codex 用にインストールする
 # - コピー先: ~/.agents/skills（Codex公式のユーザーグローバル置き場）
 # - ~/.codex/skills が存在する環境では、そこへもシムリンクを張る
-# - 既存の同名スキルは上書きしない（skip）
+# - 既定では既存の同名スキルは上書きしない（skip）
+# - --update を付けると、既存スキル（実体ディレクトリのみ）をリポの最新版で置き換える
+#   ※シムリンクは利用者側の独自運用とみなし、--update でも触らない
 set -euo pipefail
+
+UPDATE=0
+if [ "${1:-}" = "--update" ]; then
+  UPDATE=1
+fi
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 SRC="$REPO_DIR/plugins/goal-align/skills"
@@ -15,8 +22,16 @@ mkdir -p "$AGENTS_DIR"
 for skill in "$SRC"/*/; do
   name="$(basename "$skill")"
 
-  if [ -e "$AGENTS_DIR/$name" ]; then
-    echo "skip:      $AGENTS_DIR/$name（既存のため上書きしません）"
+  if [ -L "$AGENTS_DIR/$name" ]; then
+    echo "skip:      $AGENTS_DIR/$name（シムリンクのため触りません）"
+  elif [ -e "$AGENTS_DIR/$name" ]; then
+    if [ "$UPDATE" -eq 1 ]; then
+      rm -rf "$AGENTS_DIR/$name"
+      cp -R "$skill" "$AGENTS_DIR/$name"
+      echo "updated:   $AGENTS_DIR/$name"
+    else
+      echo "skip:      $AGENTS_DIR/$name（既存。更新するには --update）"
+    fi
   else
     cp -R "$skill" "$AGENTS_DIR/$name"
     echo "installed: $AGENTS_DIR/$name"
@@ -33,4 +48,4 @@ for skill in "$SRC"/*/; do
 done
 
 echo ""
-echo "完了。新しい Codex セッションで \$align-dod-solve（または /skills で一覧）を試してください。"
+echo "完了。新しい Codex セッションで \$align-dod-solve 等を試してください。"

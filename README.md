@@ -53,7 +53,7 @@ git clone https://github.com/tomosuke-chiba/kou-claude-plugins.git
 bash kou-claude-plugins/install-codex.sh
 ```
 
-スクリプトが7スキルを `~/.agents/skills`（Codex公式の置き場）へコピーし、`~/.codex/skills` がある環境にはシムリンクも張ります。既存の同名スキルは上書きしません。
+スクリプトが9スキルを `~/.agents/skills`（Codex公式の置き場）へコピーし、`~/.codex/skills` がある環境にはシムリンクも張ります。既存の同名スキルは上書きしません。
 
 ターミナルを使いたくない場合は、次のプロンプトを Codex にそのまま貼ってもOKです:
 
@@ -64,6 +64,23 @@ https://github.com/tomosuke-chiba/kou-claude-plugins を一時ディレクトリ
 
 導入後は新しい Codex セッションで `$align-dod-solve` と入力（または自動発動）で使えます。
 Codex には Claude Code の「Skillツール」が無いため、スキル間の連携は「同梱スキルの SKILL.md を直接読み込む」方式で動きます（align-dod-solve 内に読み替えルールを記載済み）。
+
+## 同梱スキル（v0.2.0で9本）
+
+| スキル | 役割 |
+|---|---|
+| align-dod-solve | オーケストレータ（grill-me→dod→kinoshita-solution） |
+| grill-me / teach-back | 認識合わせ・理解確認 |
+| dod | 木下式・完了の定義 |
+| kinoshita-solution / chakugan-ho / kujo-ho | ソリューション4案展開 |
+| slide-message-architect | 原稿→スライド枚数・1枚1メッセージ設計表 |
+| blue-gradient-slide-generator | KOU青系ビジュアルの16:9スライドPNG生成（生成エンジン=Codexのimagegen。Claude Codeから使うと生成部分をcodex execへ委譲） |
+
+## 既存インストール者のアップデート方法
+
+- **Claude Code（ターミナル）**: `/plugin marketplace update kou-plugins` → プラグインを更新
+- **デスクトップアプリ（settings.json方式）**: マーケットプレイスの更新後に新しいセッションを開始
+- **Codex**: `git -C kou-claude-plugins pull` → `bash kou-claude-plugins/install-codex.sh --update`（既存スキルも最新化。シムリンク運用のものは触りません）
 
 ## 基本フロー
 

@@ -1,0 +1,346 @@
+{
+  "version": 1,
+  "references": [
+    {
+      "file": "assets/reference-images/20260713T170048Z-user-supplied-reference-6d97b30d.png",
+      "sha256": "6d97b30d1f0d083ad60c5a523ea83010716266d3f4f0f13af9ebb23ae5c90a7b",
+      "source": "user-supplied-reference",
+      "rating": 5,
+      "feedback": "High-rated information density and blue visual system",
+      "tags": [
+        "blue-gradient",
+        "line-art",
+        "large-type",
+        "dense-readable"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:48.245560+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170048Z-user-supplied-reference-ce675e37.png",
+      "sha256": "ce675e3711b122c8533a5142271b7bbe76220499916636194621875cebb09dda",
+      "source": "user-supplied-reference",
+      "rating": 5,
+      "feedback": "High-rated information density and blue visual system",
+      "tags": [
+        "blue-gradient",
+        "line-art",
+        "large-type",
+        "dense-readable"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:48.474693+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170048Z-user-supplied-reference-a7c37908.png",
+      "sha256": "a7c37908c7fa6739786c134f196a10c84ea8cffa0fe5722354aa831dde9da031",
+      "source": "user-supplied-reference",
+      "rating": 5,
+      "feedback": "High-rated information density and blue visual system",
+      "tags": [
+        "blue-gradient",
+        "line-art",
+        "large-type",
+        "dense-readable"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:48.804995+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170049Z-user-supplied-reference-841165d7.png",
+      "sha256": "841165d75c2db4963a6837ad6b93fc190c77cfb2446073f1b416ba41ac01b2dd",
+      "source": "user-supplied-reference",
+      "rating": 5,
+      "feedback": "High-rated information density and blue visual system",
+      "tags": [
+        "blue-gradient",
+        "line-art",
+        "large-type",
+        "dense-readable"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:49.266492+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170049Z-user-supplied-reference-8684235b.png",
+      "sha256": "8684235b813dee4cec6aefb1b3ef36d0547f2f259fb792d26fe3337222a5bb28",
+      "source": "user-supplied-reference",
+      "rating": 5,
+      "feedback": "High-rated information density and blue visual system",
+      "tags": [
+        "blue-gradient",
+        "line-art",
+        "large-type",
+        "dense-readable"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:49.871906+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170050Z-user-supplied-reference-edcc478c.png",
+      "sha256": "edcc478cbef1ba25ad4ae0f28f28a77d8e5d6b778af9f6179e0d998751a14e57",
+      "source": "user-supplied-reference",
+      "rating": 5,
+      "feedback": "High-rated information density and blue visual system",
+      "tags": [
+        "blue-gradient",
+        "line-art",
+        "large-type",
+        "dense-readable"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:50.597917+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170051Z-user-supplied-reference-684f4a43.png",
+      "sha256": "684f4a4335a3e63e7d60de53d7f08392f12511f8f96a84f47c9fc03fdadadb38",
+      "source": "user-supplied-reference",
+      "rating": 5,
+      "feedback": "High-rated information density and blue visual system",
+      "tags": [
+        "blue-gradient",
+        "line-art",
+        "large-type",
+        "dense-readable"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:51.420822+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170052Z-user-approved-output-3e31b9d1.png",
+      "sha256": "3e31b9d1f76011868a24603d32270cc5d77a207b680fef462467cd7d392b41a6",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "User explicitly rated the seven-slide result excellent",
+      "tags": [
+        "blue-gradient",
+        "one-message",
+        "selective-emphasis",
+        "quality-checked"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:52.552887+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170053Z-user-approved-output-b9172f97.png",
+      "sha256": "b9172f978bc622216cd35f023e2784bde57095e2199bab48bb68484c457a23c2",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "User explicitly rated the seven-slide result excellent",
+      "tags": [
+        "blue-gradient",
+        "one-message",
+        "selective-emphasis",
+        "quality-checked"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:53.920071+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170055Z-user-approved-output-ae88f274.png",
+      "sha256": "ae88f27479548aed11ab3dd2a2159dcbf947f2e025e47007c1908a9303396fa5",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "User explicitly rated the seven-slide result excellent",
+      "tags": [
+        "blue-gradient",
+        "one-message",
+        "selective-emphasis",
+        "quality-checked"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:55.339182+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170056Z-user-approved-output-116816cf.png",
+      "sha256": "116816cfb53c40977c16f32718e9ed0b363f87852b99a5b63e25aa332afe77c8",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "User explicitly rated the seven-slide result excellent",
+      "tags": [
+        "blue-gradient",
+        "one-message",
+        "selective-emphasis",
+        "quality-checked"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:56.721644+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170058Z-user-approved-output-f34084a9.png",
+      "sha256": "f34084a914f204988983b690274a6a64e4d3e3eaf2d541d73d45549eb4a2a0fc",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "User explicitly rated the seven-slide result excellent",
+      "tags": [
+        "blue-gradient",
+        "one-message",
+        "selective-emphasis",
+        "quality-checked"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:58.204814+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170059Z-user-approved-output-ad48a16d.png",
+      "sha256": "ad48a16dbc809043e3df02885bc32cb558f636ad713fddaf9ea94b5e1783c7ad",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "User explicitly rated the seven-slide result excellent",
+      "tags": [
+        "blue-gradient",
+        "one-message",
+        "selective-emphasis",
+        "quality-checked"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:00:59.997228+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T170102Z-user-approved-output-100c9984.png",
+      "sha256": "100c99846c26fa37c410ac0f7a5ccbf4e89efc382d952391c7acb14386e811f9",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "User explicitly rated the seven-slide result excellent",
+      "tags": [
+        "blue-gradient",
+        "one-message",
+        "selective-emphasis",
+        "quality-checked"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T17:01:02.048683+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T181921Z-user-approved-adaptive-layout-79ca7eec.png",
+      "sha256": "79ca7eecffc58c542981113f18919c047c53feb60d816c4f4efad0280d015ce0",
+      "source": "user-approved-adaptive-layout",
+      "rating": 5,
+      "feedback": "Ownership split with handoff: AI performs work and human makes the final judgment",
+      "tags": [
+        "adaptive-layout",
+        "ownership-split",
+        "handoff",
+        "decision-boundary",
+        "semantic-only"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T18:19:21.503042+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T181924Z-user-approved-adaptive-layout-a8ca47eb.png",
+      "sha256": "a8ca47eb043ff3e1f5c12e4044f73105b0556e01a206cbec006b82b90c3647fa",
+      "source": "user-approved-adaptive-layout",
+      "rating": 5,
+      "feedback": "Central artifact connected to four review checkpoints makes verification logic immediately clear",
+      "tags": [
+        "adaptive-layout",
+        "central-artifact",
+        "four-checkpoints",
+        "review",
+        "semantic-only"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T18:19:24.442952+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260713T181927Z-user-approved-adaptive-layout-98be17a4.png",
+      "sha256": "98be17a4350abcdf1135bcecbdd9484aa7bc046c52d7ca21d9d75f7c189d993b",
+      "source": "user-approved-adaptive-layout",
+      "rating": 5,
+      "feedback": "Dominant stop gate for risky operations followed by AI self-check and human final confirmation",
+      "tags": [
+        "adaptive-layout",
+        "stop-gate",
+        "safety",
+        "human-confirmation",
+        "semantic-only"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-13T18:19:27.691554+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260714T061027Z-user-approved-output-adb1d80a.png",
+      "sha256": "adb1d80a257da390fe2c201f907c4e7725b948e443eadf4185f83fc690e55f45",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "北→日本→北海道→札幌と段階的に絞る構図が、曖昧なゴールを具体化する意味を直感的に伝えた",
+      "tags": [
+        "progressive-zoom",
+        "geography",
+        "narrowing",
+        "destination"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-14T06:10:27.833556+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260714T091232Z-user-approved-output-9cdf891f.png",
+      "sha256": "9cdf891f531ac8ccaa1890ac26402d1af6756d818f55175fa3c9c858cebebf81",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "A strong visual analogy makes model overuse understandable within three seconds: the tiny nearby destination contrasts with an oversized sports car, while the scooter route provides the correct comparison.",
+      "tags": [
+        "analogy",
+        "semantic-contrast",
+        "vehicle",
+        "three-second-test",
+        "model-selection"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-14T09:12:32.870590+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260714T091234Z-user-approved-output-8803012b.png",
+      "sha256": "8803012ba3d64f2d617b241e6984480df435494d44a48ff16669df1c0306f8d2",
+      "source": "user-approved-output",
+      "rating": 5,
+      "feedback": "A custom route-depot composition communicates task-to-model fit without implying a simplistic ranking; four destinations, vehicle scale, and directional arrows remain clear before reading labels.",
+      "tags": [
+        "adaptive-composition",
+        "route-selection",
+        "vehicle",
+        "model-fit",
+        "semantic-purpose"
+      ],
+      "width": 1671,
+      "height": 941,
+      "added_at": "2026-07-14T09:12:34.006179+00:00"
+    },
+    {
+      "file": "assets/reference-images/20260722T075803Z-user-approved-tone-variant-9e98de7b.png",
+      "sha256": "9e98de7b52a415b272e28214076c75cd6c7967432a3ba083b00a9e56f85fc77a",
+      "source": "user-approved-tone-variant",
+      "rating": 5,
+      "feedback": "Approved warm-brown and ivory palette adaptation that preserved the risk-to-safeguard composition and exact slide structure.",
+      "tags": [
+        "semantic-only",
+        "palette-variant",
+        "warm-brown",
+        "risk-mitigation"
+      ],
+      "width": 1672,
+      "height": 941,
+      "added_at": "2026-07-22T07:58:03.318036+00:00"
+    }
+  ]
+}

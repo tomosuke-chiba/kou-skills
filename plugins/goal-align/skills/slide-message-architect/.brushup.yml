@@ -1,0 +1,16 @@
+name: slide-message-architect
+type: skill
+description: "長文・台本・文字起こしを、最適枚数と1スライド1メッセージの制作表へ分解するスライド設計スキル"
+managed: true
+feedback_interval_days: 7   # G1=7日（新規・現在頻用）
+evaluation_axes:
+  - S1                       # 起動精度
+  - S2                       # 出力品質の安定性
+  - S3                       # 手戻り率
+  - S4                       # ガードレール遵守（機密・個人情報を学習ログへ保存しない）
+status: active
+repo: global
+path: ~/.codex/skills/slide-message-architect
+group: G1                    # 日常頻用・改善が効果へ直結
+architecture: docs/architecture.mmd
+outputs_dir: outputs/

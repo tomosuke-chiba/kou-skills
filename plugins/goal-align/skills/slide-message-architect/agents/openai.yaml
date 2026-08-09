@@ -1,0 +1,4 @@
+interface:
+  display_name: "Slide Message Architect"
+  short_description: "Turn source material into a complete slide message table"
+  default_prompt: "Use $slide-message-architect to turn this source material into an optimal slide-by-slide message table."

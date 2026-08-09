@@ -1,0 +1,16 @@
+name: blue-gradient-slide-generator
+type: skill
+description: "KOUのコバルト〜シアン表現で16:9セミナースライドPNGを生成し、文字・比率・視認性まで検証するスキル"
+managed: true
+feedback_interval_days: 7   # G1=7日（新規・現在頻用）
+evaluation_axes:
+  - S1                       # 起動精度
+  - S2                       # 出力品質の安定性
+  - S3                       # 手戻り率
+  - S4                       # ガードレール遵守（承認済み・非機密画像だけを正例登録）
+status: active
+repo: global
+path: ~/.codex/skills/blue-gradient-slide-generator
+group: G1                    # 日常頻用・改善が効果へ直結
+architecture: docs/architecture.mmd
+outputs_dir: outputs/

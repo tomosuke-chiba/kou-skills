@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blue Gradient Slide Generator"
+  short_description: "Create adaptive blue-gradient seminar slides"
+  default_prompt: "Use $blue-gradient-slide-generator to choose the clearest relationship-aware composition and generate polished seminar slide PNGs."
