@@ -44,6 +44,27 @@
 
 導入後は新しいチャットで `/align-dod-solve` が使えれば成功です。
 
+### C. Codex の人
+
+Codex は同じ SKILL.md 形式に対応しています（配置先が違うだけ）。ターミナルで:
+
+```bash
+git clone https://github.com/tomosuke-chiba/kou-claude-plugins.git
+bash kou-claude-plugins/install-codex.sh
+```
+
+スクリプトが7スキルを `~/.agents/skills`（Codex公式の置き場）へコピーし、`~/.codex/skills` がある環境にはシムリンクも張ります。既存の同名スキルは上書きしません。
+
+ターミナルを使いたくない場合は、次のプロンプトを Codex にそのまま貼ってもOKです:
+
+```
+https://github.com/tomosuke-chiba/kou-claude-plugins を一時ディレクトリに git clone し、
+同梱の install-codex.sh の内容を確認してから実行して、結果を報告してください。
+```
+
+導入後は新しい Codex セッションで `$align-dod-solve` と入力（または自動発動）で使えます。
+Codex には Claude Code の「Skillツール」が無いため、スキル間の連携は「同梱スキルの SKILL.md を直接読み込む」方式で動きます（align-dod-solve 内に読み替えルールを記載済み）。
+
 ## 基本フロー
 
 ```
