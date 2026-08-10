@@ -33,9 +33,24 @@ fulltelop-pack からインタビュー・リール制作に必要なスキル�
 
 ## インストール
 
+### Claude Code
+
 ```
 /plugin marketplace add tomosuke-chiba/kou-claude-plugins
 /plugin install fulltelop-edit@kou-plugins
 ```
+
+### Codex CLI
+
+Codex は同じ SKILL.md 形式に対応しています。リポジトリ直下のインストールスクリプトを実行すると、10スキルを `~/.agents/skills/` へ、フォント・辞書サンプルを `~/.agents/assets/` へ配置します（`~/.codex/skills` がある環境にはシムリンクも張ります）:
+
+```bash
+git clone https://github.com/tomosuke-chiba/kou-claude-plugins.git
+bash kou-claude-plugins/install-codex-fulltelop.sh
+```
+
+Codex は起動時に `codex --sandbox workspace-write` を明示してください（ffmpeg / Whisper 実行のため）。詳細な指示は [AGENTS.md](AGENTS.md) を参照。更新は `git pull` 後に `bash install-codex-fulltelop.sh --update` です。
+
+### 共通の前提
 
 初回は ffmpeg / Python / Whisper モデルの導入が必要です。詳細は [docs/install-requirements.md](docs/install-requirements.md) を参照してください。

@@ -1,0 +1,21 @@
+{
+  "name": "fulltelop-edit",
+  "version": "1.0.0",
+  "description": "動画編集パック: word単位文字起こし→ジェットカット→スマート字幕→整音→字幕プレビューUI→品質改札→横インタビュー／縦リール焼き込み／見出し帯／SRT・FCPXML出力。",
+  "author": {
+    "name": "tomosuke-chiba"
+  },
+  "license": "Proprietary - see LICENSE.txt",
+  "keywords": [
+    "video",
+    "interview",
+    "reel",
+    "subtitle",
+    "telop",
+    "caption",
+    "ffmpeg",
+    "whisper",
+    "claude",
+    "codex"
+  ]
+}

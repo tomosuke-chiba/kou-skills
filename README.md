@@ -77,6 +77,12 @@ bash kou-claude-plugins/install-codex.sh
 
 スクリプトが10スキルを `~/.agents/skills`（Codex公式の置き場）へコピーし、`~/.codex/skills` がある環境にはシムリンクも張ります。既存の同名スキルは上書きしません。
 
+動画編集パック fulltelop-edit を Codex で使う場合は、こちらを実行します（フォント等のアセットも `~/.agents/assets` へ配置します）:
+
+```bash
+bash kou-claude-plugins/install-codex-fulltelop.sh
+```
+
 ターミナルを使いたくない場合は、次のプロンプトを Codex にそのまま貼ってもOKです:
 
 ```
