@@ -1,0 +1,56 @@
+---
+name: heading-overlay
+description: 動画の左上にKOU標準デザインの見出し（紺グラデ帯＋白文字・右端斜めカット）を全編焼き込む。デザイン・位置はスクリプトに固定済みで、テキストを渡すだけで毎回同じ見た目になる。完成済み動画への後掛け（音声無劣化）と、render-horizontal-interview の --heading による1パス焼き込みの両対応。見出し／見出しつけて／タイトル帯／左上テロップで発火。
+---
+
+# heading-overlay — 左上見出し（紺グラデ帯・KOU標準）
+
+2026-08 社内研修 SAMPLE_A rev3 でユーザーが3案から選定・確定したデザイン。
+**「見出しつけて」と言われたら、このスキルの固定デザイン・固定位置で付ける**（都度デザインを提案しない）。
+見出しテキストだけユーザーから受け取る（例:「2日間のAI研修を終えて」）。
+
+## デザイン仕様（scripts/add_heading.py に定数として固定・変更しない）
+
+- 紺グラデーション帯: 左 RGB(22,32,92) → 右 RGB(56,80,168)、画面左端からブリード
+- 右端は斜めカット（下辺が +28px 右へ張り出すパラレログラム）
+- 下辺にライトブルー RGB(130,160,230) の差し色スリバー（7px）
+- 白文字 NotoSansJP-ExtraBold 62px＋紺薄影、帯に落ち影
+- 位置: 上から y=38px・帯高 112px・左パディング 72px・全編表示
+- 帯の幅はテキスト長に自動追従（左右パディング 72/64px）
+
+## 使い方
+
+### A. 完成済み動画に後掛け（音声無劣化・映像のみ再エンコード）
+
+```bash
+python3 scripts/add_heading.py \
+  --src "<完成動画>.mp4" --text "見出しテキスト" --out "<出力>.mp4"
+```
+
+- 音声は `-c:a copy`（ラウドネス実測値がそのまま維持される）
+- 映像は videotoolbox 10M → 失敗時 libx264 CRF18
+- `overlay=shortest=1` 固定。**`-shortest` だけではループPNG入力の癖で映像が
+  10フレーム程度余分に出る**（2026-08 実測）。shortest=1 が対策なので外さない
+
+### B. render-horizontal-interview と同時に1パス焼き込み
+
+render_interview.py に `--heading "見出しテキスト"` を渡す。
+テロップPNG側に合成される方式なので追加のffmpeg入力は無く、尺の癖も出ない。
+
+### C. PNGだけ欲しいとき
+
+```bash
+python3 scripts/add_heading.py --png-only --text "見出し" --png heading.png
+```
+
+## QC（焼き込み後に必ず）
+
+1. 冒頭・中盤・末尾の3フレームを抽出し、見出しが同位置・同デザインで出ていること、
+   下部テロップと干渉していないことを目視
+2. 尺が元動画と一致（±1フレーム）
+3. 後掛け（A）の場合は音声ストリームが copy であること（`ffprobe` で bit_rate/codec が元と同一）
+
+## 関連
+
+- デザイン確定の経緯・社内研修での運用: メモリ `internal-interview-precise-cut-workflow`
+- 1パス版の実装: `../render-horizontal-interview/scripts/render_interview.py`

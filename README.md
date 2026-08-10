@@ -1,4 +1,25 @@
-# kou-plugins — goal-align
+# kou-plugins
+
+KOUコアメンバー向けのClaude Codeプラグイン集。
+
+| プラグイン | 内容 |
+|---|---|
+| `goal-align` | 認識合わせ→完了定義→ソリューション探索のスキルパック |
+| `fulltelop-edit` | 動画編集パック（文字起こし→カット→字幕→整音→横インタビュー／縦リール焼き込み。詳細は [plugins/fulltelop-edit/README.md](plugins/fulltelop-edit/README.md)） |
+
+インストール（共通）:
+
+```
+/plugin marketplace add tomosuke-chiba/kou-claude-plugins
+/plugin install goal-align@kou-plugins
+/plugin install fulltelop-edit@kou-plugins
+```
+
+※ fulltelop-edit は ffmpeg / Python / Whisper の導入が別途必要です（[plugins/fulltelop-edit/docs/install-requirements.md](plugins/fulltelop-edit/docs/install-requirements.md)）。
+
+---
+
+# goal-align
 
 ## できること
 
