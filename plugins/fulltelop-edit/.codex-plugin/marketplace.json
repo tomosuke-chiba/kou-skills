@@ -1,0 +1,29 @@
+{
+  "name": "fulltelop-edit",
+  "owner": {
+    "name": "tomosuke-chiba"
+  },
+  "description": "動画編集パック - インタビュー／縦リールのテロップパイプラインと品質改札。",
+  "plugins": [
+    {
+      "name": "fulltelop-edit",
+      "source": ".",
+      "version": "1.0.0",
+      "description": "10 skills bundled: transcribe-words, jetcut-design, smart-caption, audio-master, telop-preview, qc-gate, render-horizontal-interview, render-vertical-reel, heading-overlay, export-deliver",
+      "category": "video",
+      "keywords": [
+        "video",
+        "interview",
+        "subtitle",
+        "telop",
+        "caption",
+        "ffmpeg",
+        "whisper",
+        "claude",
+        "codex",
+        "instagram",
+        "reel"
+      ]
+    }
+  ]
+}
