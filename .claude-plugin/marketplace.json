@@ -7,7 +7,7 @@
     {
       "name": "goal-align",
       "source": "./plugins/goal-align",
-      "description": "認識合わせ(grill-me)→完了定義(dod)→木下式ソリューション(kinoshita-solution)を1本で回すスキルパック。オーケストレータ align-dod-solve と依存6スキルを同梱。"
+      "description": "認識合わせ(grill-me)→完了定義(dod)→ソリューション探索(solution-research)を1本で回すスキルパック。オーケストレータ grill-dod-solution-research と依存7スキルを同梱。"
     }
   ]
 }

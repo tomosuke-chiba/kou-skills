@@ -48,4 +48,4 @@ for skill in "$SRC"/*/; do
 done
 
 echo ""
-echo "完了。新しい Codex セッションで \$align-dod-solve 等を試してください。"
+echo "完了。新しい Codex セッションで \$grill-dod-solution-research 等を試してください。"
