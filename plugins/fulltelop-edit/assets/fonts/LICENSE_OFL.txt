@@ -1,0 +1,10 @@
+Noto Sans JP は SIL Open Font License Version 1.1 で配布されています。
+本パッケージはこのライセンスに従って NotoSansJP-ExtraBold.ttf を再配布しています。
+
+ライセンス全文: https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL
+Noto Fonts: https://fonts.google.com/noto/specimen/Noto+Sans+JP
+
+Copyright 2014-2025 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
+Modifications by Google.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.

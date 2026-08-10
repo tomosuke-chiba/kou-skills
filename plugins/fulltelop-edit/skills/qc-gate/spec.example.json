@@ -1,0 +1,19 @@
+{
+  "_doc": "1動画=1spec。S0で経路を1回だけ固定する。閉じたら途中で経路を変えない。qc_gate実行時の --profile は threshold_profile を渡す。",
+  "stem": "幸せってなんだろうね_v2",
+  "route": "完結型",
+  "_route_choices": "完結型(縦撮りネイティブ・build_short_synced) / フック型(横→9:16・render_highlights) / 焼き込み(セミナー・ポッドキャスト切抜き・telop_burn)",
+  "layout_type": "completion",
+  "_layout_choices": "completion / tight / wide",
+  "audio_mode": "muka",
+  "_audio_choices": "muka(無加工) / seion(整音-14LUFS)",
+  "delivery": "焼き込みmov",
+  "_delivery_choices": "FCPXML / 焼き込みmov",
+  "threshold_profile": "vertical_reel",
+  "paths": {
+    "src": "/Users/shuhei/Downloads/タイトルなし 4.MP4",
+    "words": "/tmp/short_edit_タイトルなし4/words.json",
+    "koetsu": "/tmp/shiawase_jet/koetsu_v2.json",
+    "output": "/Users/shuhei/Desktop/幸せってなんだろうね_完成版_v2.mp4"
+  }
+}

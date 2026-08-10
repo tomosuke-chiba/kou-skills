@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "version": 1,
+    "updated": "2026-06-29",
+    "note": "Whisper 誤変換の自動補正辞書。pattern は正規表現可。後読み (?=...) で文脈ガード可。コピーして vocabulary.json として保存し、自分用にカスタマイズしてください。"
+  },
+  "initial_prompt_terms": [
+    "Claude",
+    "Claude Code",
+    "Anthropic",
+    "Gemini",
+    "ChatGPT",
+    "Substack",
+    "Brain",
+    "Instagram",
+    "YouTube",
+    "Vimeo",
+    "Final Cut Pro",
+    "Premiere Pro",
+    "CapCut"
+  ],
+  "corrections": [
+    {
+      "pattern": "クロードコード",
+      "replacement": "Claude Code",
+      "category": "product",
+      "note": "Anthropic の Claude Code（カタカナ→英字）"
+    },
+    {
+      "pattern": "クロード(?!コード)",
+      "replacement": "Claude",
+      "category": "product",
+      "note": "Claude 単体（Code を含まないとき）"
+    },
+    {
+      "pattern": "黒のコード",
+      "replacement": "Claude Code",
+      "category": "product",
+      "note": "Whisper 誤認識 → Claude Code"
+    },
+    {
+      "pattern": "ジェミニ|ジェミナイ|ジェミーニ",
+      "replacement": "Gemini",
+      "category": "product",
+      "note": "Google の AI Gemini"
+    },
+    {
+      "pattern": "アンソロ[ピビ]ック",
+      "replacement": "Anthropic",
+      "category": "company",
+      "note": "Anthropic 社"
+    },
+    {
+      "pattern": "リンパ種",
+      "replacement": "リンパ腫",
+      "category": "medical",
+      "note": "Whisper誤認識・医療用語"
+    },
+    {
+      "pattern": "SLS",
+      "replacement": "SNS",
+      "category": "marketing",
+      "note": "マーケ文脈での SLS は SNS の誤認識"
+    },
+    {
+      "pattern": "ネギメ",
+      "replacement": "値決め",
+      "category": "business",
+      "note": "価格設定の話の文脈"
+    },
+    {
+      "pattern": "Claude Train",
+      "replacement": "コルトレーン",
+      "category": "name",
+      "note": "ジャズ文脈で John Coltrane のこと"
+    }
+  ]
+}
