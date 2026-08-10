@@ -1,7 +1,7 @@
 {
   "name": "goal-align",
-  "description": "認識合わせ→完了定義→ソリューション探索のオーケストレータ＋スライド制作スキルパック（grill-dod-solution-research / grill-me / teach-back / dod / solution-research / kinoshita-solution / chakugan-ho / kujo-ho / slide-message-architect / blue-gradient-slide-generator）",
-  "version": "0.2.0",
+  "description": "認識合わせ→完了定義→ソリューション探索のオーケストレータ＋スライド制作スキルパック（grill-dod-solution-research / grill-me / teach-back / dod / solution-research / solution-deep-research / kinoshita-solution / chakugan-ho / kujo-ho / slide-message-architect / blue-gradient-slide-generator）",
+  "version": "0.3.0",
   "author": {
     "name": "tomosuke-chiba"
   }

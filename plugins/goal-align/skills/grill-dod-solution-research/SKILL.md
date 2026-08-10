@@ -5,7 +5,7 @@ description: 認識合わせ→完了定義→解決策探索を1本で回すオ
 
 # grill → dod → solution-research（要件定義から解決策を探す）
 
-> 構成: `grill-me`（認識合わせ）→ 地図→4要素変換 → `dod`（完了定義）→ ［明示指示時のみ］`solution-research`（型で解決策を探索）
+> 構成: `grill-me`（認識合わせ）→ 地図→4要素変換 → `dod`（完了定義）→ ［明示指示時のみ］`solution-research`（軽量5手法で解決策を探索。深掘り指示時は `solution-deep-research`）
 > 旧名 `align-dod-solve` の改名版。Phase 4 の呼び先を `kinoshita-solution` から `solution-research` に差し替えた。
 
 ## 原則
@@ -13,7 +13,7 @@ description: 認識合わせ→完了定義→解決策探索を1本で回すオ
 - 既存スキルの手順を書き換えない。このスキルは**順序と受け渡しだけ**を定義する
 - **重複質問の禁止**: grill-me の地図で確定済みの項目を dod で聞き直さない
 - grill-me の停止境界（同一チャットで実装しない）を全フェーズに継承する
-- Codex など Skill ツールがない環境では、「Skillツールで◯◯を起動」を「同じスキル置き場にある `◯◯/SKILL.md` を全文読み込み、その手順に従う」と読み替える（grill-me / teach-back / dod / solution-research / kinoshita-solution / chakugan-ho / kujo-ho が同梱インストールされている前提）
+- Codex など Skill ツールがない環境では、「Skillツールで◯◯を起動」を「同じスキル置き場にある `◯◯/SKILL.md` を全文読み込み、その手順に従う」と読み替える（grill-me / teach-back / dod / solution-research / solution-deep-research / kinoshita-solution / chakugan-ho / kujo-ho が同梱インストールされている前提）
 
 ## 手順
 
@@ -29,8 +29,9 @@ description: 認識合わせ→完了定義→解決策探索を1本で回すオ
 
    変換結果を表で提示し、**地図から埋まらない要素だけ**質問する（未確定の数値は推測で置かず「❓要確認」）
 3. **Phase 3 — dod 確定**: `dod` スキルの出力形式（重タスク=4要素表／軽タスク=2行）で確定し、**ここで一旦停止する**
-4. **Phase 4 — solution-research**: ユーザーが「ソリューションも」「解決策も出して」「案を出して」と明示指示した場合のみ `solution-research` を起動し、確定したDoDの4要素をそのまま入力として渡す。指示がなければ展開しない
-   - 木下式の固定4案（着眼法×2＋苦情法×2）が欲しいと名指しされた場合は、`solution-research` 経由ではなく `kinoshita-solution` を単体起動してもよい（どちらも引き続き利用可）
+4. **Phase 4 — solution-research**: ユーザーが「ソリューションも」「解決策も出して」「案を出して」と明示指示した場合のみ `solution-research`（軽量版・クイック5手法）を起動し、確定したDoDの4要素をそのまま入力として渡す。指示がなければ展開しない
+   - ユーザーが「深く」「徹底的に」「いろんな角度で」と深掘りを指示した場合は、軽量版の代わりに `solution-deep-research`（コア10手法＋カタログ26型＋経営者ペルソナ）を起動する
+   - 木下式の固定4案（着眼法×2＋苦情法×2）が欲しいと名指しされた場合は、`kinoshita-solution` を単体起動してもよい（すべて引き続き利用可）
 
 ## 停止境界
 

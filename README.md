@@ -5,7 +5,7 @@
 - 認識合わせ（`grill-me`）→完了定義（`dod`）→ソリューション探索（`solution-research`）を1本のオーケストレータ `grill-dod-solution-research` で回せます（旧名 `align-dod-solve` から改名）。
 - grill-me で作った共通認識の地図を、重複質問なしで dod の4要素（目的・目標・答えの条件・検証方法）に自動変換します。
 - 「認識ズレてる気がするから最初から詰めて」のような曖昧な依頼でも、要件定義のズレを構造化して止められます。
-- `solution-research` は思考法の型レジストリ（26型＋人物ペルソナ）から手法を選び、DoDの答えの条件から逆算して解決策案と推奨を出します。木下式の固定4案が欲しいときは従来どおり `kinoshita-solution` を単体起動できます。
+- ソリューション探索は2段構え: `solution-research`（軽量版・クイック5手法でサクッと3〜4案）と `solution-deep-research`（重量版・コア10手法×6ベクトル＋カタログ26型＋経営者ペルソナ11人で徹底探索）。木下式の固定4案が欲しいときは従来どおり `kinoshita-solution` を単体起動できます。
 
 ## コアメンバー向けインストール手順
 
@@ -54,7 +54,7 @@ git clone https://github.com/tomosuke-chiba/kou-claude-plugins.git
 bash kou-claude-plugins/install-codex.sh
 ```
 
-スクリプトが10スキルを `~/.agents/skills`（Codex公式の置き場）へコピーし、`~/.codex/skills` がある環境にはシムリンクも張ります。既存の同名スキルは上書きしません。
+スクリプトが11スキルを `~/.agents/skills`（Codex公式の置き場）へコピーし、`~/.codex/skills` がある環境にはシムリンクも張ります。既存の同名スキルは上書きしません。
 
 ターミナルを使いたくない場合は、次のプロンプトを Codex にそのまま貼ってもOKです:
 
@@ -66,7 +66,7 @@ https://github.com/tomosuke-chiba/kou-claude-plugins を一時ディレクトリ
 導入後は新しい Codex セッションで `$grill-dod-solution-research` と入力（または自動発動）で使えます。
 Codex には Claude Code の「Skillツール」が無いため、スキル間の連携は「同梱スキルの SKILL.md を直接読み込む」方式で動きます（grill-dod-solution-research 内に読み替えルールを記載済み）。
 
-## 同梱スキル（v0.2.0で10本）
+## 同梱スキル（v0.3.0で11本）
 
 > `align-dod-solve` は `grill-dod-solution-research` に改名しました。
 
@@ -75,7 +75,8 @@ Codex には Claude Code の「Skillツール」が無いため、スキル間�
 | grill-dod-solution-research | オーケストレータ（grill-me→dod→solution-research。旧名 align-dod-solve） |
 | grill-me / teach-back | 認識合わせ・理解確認 |
 | dod | 木下式・完了の定義 |
-| solution-research | 思考法の型レジストリ（26型＋人物ペルソナ）でソリューション案を発想・推奨 |
+| solution-research | 軽量版: クイック5手法で2〜3手法→3〜4案をサクッと発想・推奨 |
+| solution-deep-research | 重量版: コア10手法×6ベクトル＋カタログ26型＋経営者ペルソナ11人で徹底探索 |
 | kinoshita-solution / chakugan-ho / kujo-ho | ソリューション4案展開（木下式固定構成。単体起動も可） |
 | slide-message-architect | 原稿→スライド枚数・1枚1メッセージ設計表 |
 | blue-gradient-slide-generator | KOU青系ビジュアルの16:9スライドPNG生成（生成エンジン=Codexのimagegen。Claude Codeから使うと生成部分をcodex execへ委譲） |
@@ -109,7 +110,8 @@ grill-me（認識合わせ・地図作成）
      ↓
 dod（完了定義を確定・ここで一旦停止）
      ↓（ユーザーが明示指示した場合のみ）
-solution-research（思考法の型で解決策を探索・推奨）
+solution-research（軽量版・クイック5手法で解決策を探索・推奨）
+     ※「深く・徹底的に」なら solution-deep-research（カタログ26型＋ペルソナ）
      ※木下式の固定4案が欲しいときは kinoshita-solution を単体起動
 ```
 
