@@ -8,6 +8,11 @@
       "name": "goal-align",
       "source": "./plugins/goal-align",
       "description": "認識合わせ(grill-me)→完了定義(dod)→ソリューション探索(solution-research)を1本で回すスキルパック。オーケストレータ grill-dod-solution-research と依存7スキルを同梱。"
+    },
+    {
+      "name": "fulltelop-edit",
+      "source": "./plugins/fulltelop-edit",
+      "description": "動画編集パック。word単位文字起こし→ジェットカット→スマート字幕→整音→字幕プレビューUI→品質改札→横インタビュー焼き込み／縦リール／見出し帯／SRT・FCPXML出力の10スキルを同梱。"
     }
   ]
 }

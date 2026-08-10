@@ -1,0 +1,204 @@
+{
+  "version": 1,
+  "last_updated": "2026-06-24",
+  "_doc": "ショート編集の全数値しきい値の唯一の正(SSoT)。エージェントはこの値を上書きしない。散在していた顔目線(25-30/33/34/38/42-46%)・テロップ幅(1900/1750)・cps(7/9)等をここに一本化。出どころ=短編集SKILL.md/telop SKILL.md/REEL_RULES.md。",
+  "profiles": {
+    "vertical_reel": {
+      "_doc": "縦4Kリール(2160x3840)。完結型/フック型/焼き込みリール共通。テロップ白+ドロップシャドウ。",
+      "caption": {
+        "font_path": "@find_font",
+        "font_px": 120,
+        "_font_note": "焼き込みは固定120px@2160幅。telop_burnのsize-ratio経路を使う場合は frame_h*0.036≒138 になるので --font-px で渡す",
+        "frame_w": 2160,
+        "frame_h": 3840,
+        "max_px": 1900,
+        "comfort_px": 1750,
+        "max_chars": 15,
+        "comfort_chars": 12,
+        "cps_max": 7.0,
+        "cps_comfort": 6.0,
+        "cps_hard": 12.0,
+        "_cps_note": "cps_max超=WARN(要検討・尺は声同期で変えられないので分割推奨)。cps_hard超=FAIL(物理的に読めない)。畳み掛け(同text連続)はcps検査から除外。字数/幅/行頭NGが高確度のFAIL3種",
+        "min_dur_s": 0.35,
+        "ng_head": [
+          "ん",
+          "っ",
+          "ー",
+          "ら",
+          "り",
+          "る",
+          "れ",
+          "ろ",
+          "よ",
+          "ね"
+        ],
+        "forbid_punctuation": true
+      },
+      "sync": {
+        "_doc": "テロップ表示開始と発話開始のズレ。早いのは厳しく/遅いのはSTART_OFFSET0.18秒中心で許容(非対称窓)。word-anchor主経路は出力再認識のword境界に照合するが、クロスパス(ビルド時Whisper vs 改札再認識)の境界ノイズが~300msあるため、窓を出てもノイズ床内はWARN(要目視)、明確な大ズレのみFAIL。",
+        "min_ms": -80,
+        "max_ms": 280,
+        "median_abs_max_ms": 150,
+        "match_edit_distance_max": 2,
+        "warn_early_ms": -350,
+        "warn_late_ms": 480,
+        "median_warn_ms": 400,
+        "median_fail_ms": 600,
+        "_judge_doc": "個別テロップのズレ=窓(-80〜280)外でWARN(要目視・自動FAILにしない)。ハードFAILは中央値>median_fail_ms＝全テロップ系統ズレ(オフセット間違い等)の時だけ。理由=言い換え/繰り返し語/再認識±300msで個別判定は誤検出が出るため、最後は焼き上がり目視が必要。"
+      },
+      "audio": {
+        "mode_default": "muka",
+        "_mode_note": "muka=無加工(iPhone収録レベリング済み・声トラックを触らない) / seion=整音(-14LUFS)",
+        "true_peak_max_dbfs": -1.0,
+        "max_silence_s": 2.0,
+        "silence_noise_db": -30,
+        "seion_lufs_target": -14.0,
+        "seion_lufs_tol": 1.0,
+        "passthrough_xcorr_min": 0.999,
+        "passthrough_rms_diff_db": 0.1
+      },
+      "render": {
+        "w": 2160,
+        "h": 3840,
+        "fps": 30,
+        "fps_tol": 0.5,
+        "max_duration_s": 90,
+        "require_audio": true,
+        "aac_bitrate_min": 256000,
+        "sample_rate": 48000,
+        "peak_clip_dbfs": -1.0
+      },
+      "face": {
+        "_doc": "目線=出力フレームの上からの%。完結型は顔が寄りズームで上1/4。type別レンジ。",
+        "eyeline_pct": {
+          "completion": [
+            34,
+            42
+          ],
+          "tight": [
+            24,
+            30
+          ],
+          "wide": [
+            29,
+            37
+          ]
+        },
+        "telop_overlap_px_max": 0,
+        "ui_zone": {
+          "bottom_px": 480,
+          "right_px": 140,
+          "top_px": 200
+        }
+      }
+    },
+    "horizontal_interview": {
+      "_doc": "横インタビュー(対談)。1920x1080・話者色分けフルテロップ・座布団なし。句読点は「はい、ありがとうございます」等の定型あいづちのみ許容。font_pxは interviewer/respondent 大きい方(74px)で幅チェック。added 2026-07 (render-horizontal-interview 新設に伴う追補、他プロファイルは変更なし)。",
+      "caption": {
+        "font_path": "@find_font",
+        "font_px": 74,
+        "frame_w": 1920,
+        "frame_h": 1080,
+        "max_px": 1550,
+        "comfort_px": 1350,
+        "max_chars": 16,
+        "comfort_chars": 14,
+        "cps_max": 9.0,
+        "cps_comfort": 7.0,
+        "cps_hard": 15.0,
+        "_cps_note": "短い定型あいづち(はい、ありがとうございます 等)は瞬時に読めるため cps_hard をやや緩和",
+        "min_dur_s": 0.3,
+        "ng_head": [
+          "ん",
+          "っ",
+          "ー",
+          "ら",
+          "り",
+          "る",
+          "れ",
+          "ろ",
+          "よ",
+          "ね"
+        ],
+        "forbid_punctuation": false
+      },
+      "sync": {
+        "min_ms": -80,
+        "max_ms": 280,
+        "median_abs_max_ms": 150,
+        "match_edit_distance_max": 2,
+        "warn_early_ms": -350,
+        "warn_late_ms": 480,
+        "median_warn_ms": 400,
+        "median_fail_ms": 600
+      },
+      "audio": {
+        "mode_default": "seion",
+        "true_peak_max_dbfs": -1.0,
+        "max_silence_s": 2.0,
+        "silence_noise_db": -30,
+        "seion_lufs_target": -14.0,
+        "seion_lufs_tol": 1.0
+      },
+      "render": {
+        "w": 1920,
+        "h": 1080,
+        "fps": 30,
+        "fps_tol": 0.5,
+        "max_duration_s": 99999,
+        "require_audio": true,
+        "aac_bitrate_min": 200000,
+        "sample_rate": 48000,
+        "peak_clip_dbfs": -1.0
+      }
+    },
+    "horizontal_lecture": {
+      "_doc": "横長セミナー/解説/画面共有。黄色テロップ#FBE35F・焼き込み完成動画。",
+      "caption": {
+        "font_path": "@find_font",
+        "font_px": 95,
+        "frame_w": 2880,
+        "frame_h": 1620,
+        "max_px": 2400,
+        "comfort_px": 2100,
+        "max_chars": 24,
+        "comfort_chars": 20,
+        "cps_max": 9.0,
+        "cps_comfort": 7.0,
+        "min_dur_s": 0.4,
+        "ng_head": [
+          "ん",
+          "っ",
+          "ー",
+          "ら",
+          "り",
+          "る",
+          "れ",
+          "ろ",
+          "よ",
+          "ね"
+        ],
+        "forbid_punctuation": false
+      },
+      "audio": {
+        "mode_default": "seion",
+        "true_peak_max_dbfs": -1.0,
+        "max_silence_s": 3.0,
+        "silence_noise_db": -30,
+        "seion_lufs_target": -14.0,
+        "seion_lufs_tol": 1.5
+      },
+      "render": {
+        "w": 2880,
+        "h": 1620,
+        "fps": 30,
+        "fps_tol": 0.5,
+        "max_duration_s": 99999,
+        "require_audio": true,
+        "aac_bitrate_min": 256000,
+        "sample_rate": 48000,
+        "peak_clip_dbfs": -1.0
+      }
+    }
+  }
+}

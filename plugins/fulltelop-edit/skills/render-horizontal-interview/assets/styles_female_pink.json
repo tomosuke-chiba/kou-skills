@@ -1,0 +1,10 @@
+{
+  "respondent": {
+    "size": 90,
+    "fill": [240, 163, 216, 255],
+    "stroke": 10,
+    "stroke_fill": [255, 255, 255, 255],
+    "shadow": [25, 25, 70, 170],
+    "shadow_off": [5, 6]
+  }
+}
