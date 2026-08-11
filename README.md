@@ -1,58 +1,65 @@
 # kou-skills
 
-KOUのコアメンバー向け **Claude Code / Codex 両対応スキル集**です。2つのプラグインを配布しています。
+KOUのコアメンバー向け **AIスキル集（全21本）** です。**URLを1本登録するだけ**で、claude.ai・Claude Desktop・Claude Code のどこからでも使えます。
 
-| プラグイン | 内容 |
+```
+https://kou-skills-mcp.tomosuke-chiba-work.workers.dev/mcp
+```
+
+| 分類 | 内容 |
 |---|---|
-| `goal-align` | 認識合わせ→完了定義→解決策探索の思考系スキル＋KOU青系スライド制作スキル（全11本・下に画像つき紹介あり） |
-| `fulltelop-edit` | 動画編集パック（文字起こし→カット→字幕→整音→横インタビュー／縦リール焼き込み。全10本。詳細は [plugins/fulltelop-edit/README.md](plugins/fulltelop-edit/README.md)） |
+| 思考・設計系（11本） | 認識合わせ→完了定義→解決策探索のスキル＋KOU青系スライド制作スキル（下に画像つき紹介あり） |
+| 動画編集系（10本） | 文字起こし→カット→字幕→整音→横インタビュー／縦リール焼き込み（詳細は [plugins/fulltelop-edit/README.md](plugins/fulltelop-edit/README.md)） |
 
-> このリポは public です。GitHub の招待や認証設定は不要で、誰でもそのままインストールできます。
+> このリポは public です。招待も認証設定も不要で、誰でもそのまま接続できます。
 > 旧リポ名 `kou-claude-plugins` から改名しました（旧URLは自動リダイレクトされます）。
 
 ---
 
-## 📦 インストール方法
+## 📦 つなぎ方（所要1分）
 
-### A. ターミナル版 Claude Code の人
-
-```
-/plugin marketplace add tomosuke-chiba/kou-skills
-/plugin install goal-align@kou-skills
-/plugin install fulltelop-edit@kou-skills
-```
-
-（fulltelop-edit は使う人だけでOK。ffmpeg / Python / Whisper の導入が別途必要です → [インストール要件](plugins/fulltelop-edit/docs/install-requirements.md)）
-
-導入後、新しいセッションで `/grill-dod-solution-research` が使えれば成功です。
-
-### B. デスクトップアプリの人（/plugin が使えない環境）
-
-デスクトップアプリでは `/plugin` コマンドは使えません。次のどちらかで導入します。
-
-**B-1. いちばん簡単: 下のプロンプトを Claude にそのまま貼る**
+登録するURLは全クライアント共通でこれ1本です。
 
 ```
-次のプラグインを導入してください。
-1. ~/.claude/settings.json（なければ作成）に以下をマージする（既存の設定は消さない）:
-{
-  "extraKnownMarketplaces": {
-    "kou-skills": {
-      "source": { "source": "github", "repo": "tomosuke-chiba/kou-skills" }
-    }
-  },
-  "enabledPlugins": ["goal-align@kou-skills"]
-}
-（動画編集パックも使う場合は enabledPlugins に "fulltelop-edit@kou-skills" も追加）
-2. マージ後、settings.json が有効なJSONであることを確認して報告してください。
-3. 反映にはアプリの再起動（新しいセッション）が必要な旨も教えてください。
+https://kou-skills-mcp.tomosuke-chiba-work.workers.dev/mcp
 ```
 
-**B-2. アプリのプラグインブラウザから**
+### A. claude.ai（ブラウザ）の人
 
-デスクトップアプリのプラグイン画面（Plugin Browser）でこのマーケットプレイス（`tomosuke-chiba/kou-skills`）を追加し、`goal-align` をインストールします。
+1. 右上のプロフィール → **設定（Settings）** → **コネクタ（Connectors）** を開く
+2. **「カスタムコネクタを追加」** をクリック
+3. 名前に `kou-skills`、URLに上のアドレスを貼って追加
 
-### C. Codex の人
+認証（ログイン）は不要です。追加後、チャットで「使えるスキルを一覧して」と言えば21本が出ます。
+
+### B. Claude Desktop（アプリ）の人
+
+claude.ai と同じアカウント設定を共有しています。**A の手順をブラウザで1回やれば、アプリ側にも反映されます**（反映されないときはアプリを再起動）。
+
+### C. Claude Code（ターミナル）の人
+
+```bash
+claude mcp add --transport http kou-skills https://kou-skills-mcp.tomosuke-chiba-work.workers.dev/mcp
+```
+
+`/mcp` コマンドで `kou-skills` が connected になっていれば成功です。
+Claude Code では各スキルが `/mcp__kou-skills__<スキル名>` というスラッシュコマンドとしても出ます。
+
+### 使い方（共通）
+
+つないだ後は、次の3つの道具が使えます。
+
+| 道具 | 何をするか |
+|---|---|
+| `list_skills` | 21スキルの一覧と説明を出す（「どんなスキルがある？」で呼ばれます） |
+| `get_skill` | 指定したスキルの手順書を丸ごと読み込む（「dodスキルで完了定義を作って」等） |
+| `get_skill_reference` | そのスキルの補足資料を読み込む |
+
+> ⚠️ 動画編集系の10本は、**手順書は読めますが実行には各自のローカル環境（ffmpeg / Python / Whisper）が必要**です → [インストール要件](plugins/fulltelop-edit/docs/install-requirements.md)
+
+---
+
+## 🖥 Codex の人（ローカルインストール）
 
 Codex は同じ SKILL.md 形式に対応しています（配置先が違うだけ）。ターミナルで:
 
@@ -81,32 +88,22 @@ Codex には Claude Code の「Skillツール」が無いため、スキル間�
 
 ---
 
-## ⚠️ 旧「kou-plugins」からの移行（すでにインストール済みの人だけ）
+## ⚠️ 以前プラグインで入れた人へ（MCPに一本化しました）
 
-マーケットプレイス名を `kou-plugins` → `kou-skills` に変更したため、**1回だけ**入れ直しが必要です。
+配布方法を **プラグイン → MCPコネクタ** に一本化しました。URL1本で全クライアントに配れるためです。
 
-**ターミナル版 Claude Code**:
+**やること**: 上の「つなぎ方」でMCPを登録してください。それだけで21本すべて使えます。
 
-```
-/plugin uninstall goal-align@kou-plugins
-/plugin marketplace remove kou-plugins
-/plugin marketplace add tomosuke-chiba/kou-skills
-/plugin install goal-align@kou-skills
-```
-
-（fulltelop-edit@kou-plugins を入れていた人は、同様に uninstall → `/plugin install fulltelop-edit@kou-skills`）
-
-**デスクトップアプリ**: 次のプロンプトを Claude にそのまま貼る:
+**古いプラグインの掃除**（任意・入れっぱなしでも壊れません）:
 
 ```
-~/.claude/settings.json を次のとおり更新してください（他の設定は消さない）。
-1. extraKnownMarketplaces から "kou-plugins" のエントリを削除し、代わりに
-   "kou-skills": { "source": { "source": "github", "repo": "tomosuke-chiba/kou-skills" } } を追加
-2. enabledPlugins の "goal-align@kou-plugins" を "goal-align@kou-skills" に置き換え
-3. 有効なJSONであることを確認し、アプリの再起動が必要な旨を報告してください。
+/plugin uninstall goal-align@kou-skills
+/plugin uninstall fulltelop-edit@kou-skills
 ```
 
-**Codex**: スキル実体はローカルコピーのため作業不要。クローン済みリポを更新に使う場合だけ、リモートURLを新名称にしておくと確実です:
+（さらに古い `@kou-plugins` 版を入れていた人は、名前を `kou-plugins` に読み替えて同じコマンドを実行）
+
+**Codex** はローカルコピー方式のままです。作業は不要ですが、クローン済みリポを更新に使う場合だけリモートURLを新名称にしておくと確実です:
 
 ```bash
 git -C kou-claude-plugins remote set-url origin https://github.com/tomosuke-chiba/kou-skills.git
@@ -241,29 +238,39 @@ solution-research（軽量版・クイック5手法で解決策を探索・推�
 
 ---
 
-## 🔄 アップデート方法（インストール済みの人）
+## 🔄 アップデート方法
 
-- **Claude Code（ターミナル）**: `/plugin marketplace update kou-skills` → プラグインを更新
-- **デスクトップアプリ**: 次のプロンプトを Claude にそのまま貼る:
-
-```
-Claude Codeプラグイン「goal-align@kou-skills」を最新版にアップデートしてください。
-
-1. ~/.claude/plugins/marketplaces/kou-skills ディレクトリが存在するか確認する
-   （なければ ~/.claude/plugins/known_marketplaces.json から kou-skills の
-   installLocation を調べて、そのディレクトリを対象にする）
-2. そのディレクトリで git pull を実行する
-3. 更新後、plugins/goal-align/.claude-plugin/plugin.json の version を表示して
-   報告する（0.3.0 以上になっていれば成功）
-4. 見つからない・失敗した場合は、エラー内容だけ報告して他の方法を勝手に試さない
-5. 成功したら「アプリを再起動して新しいチャットから新スキルが使えます」と案内する
-```
-
-- **Codex**: `git -C kou-skills pull` → `bash kou-skills/install-codex.sh --update`（fulltelop-edit を使う人は `bash kou-skills/install-codex-fulltelop.sh --update` も実行。既存スキルを最新化し、シムリンク運用のものは触りません）
+- **MCPで使っている人（claude.ai / Desktop / Claude Code）**: **作業不要**です。サーバー側を更新すれば全員に自動で反映されます。
+- **Codex の人**: `git -C kou-skills pull` → `bash kou-skills/install-codex.sh --update`（fulltelop-edit を使う人は `bash kou-skills/install-codex-fulltelop.sh --update` も実行。既存スキルを最新化し、シムリンク運用のものは触りません）
 
 ---
 
 ## 🛠 メンテナンス（管理者向け）
 
-- 正本は `~/.claude/skills` 側（一部は `recruit/skills` 配下の実体からのシムリンク）です。このリポは配布用のコピーであり、直接編集しないでください。
-- スキルを更新した場合は、正本側を更新したうえで本リポの `plugins/goal-align/skills/` 配下へコピーし直し、コミット・pushしてください。
+### スキルを更新したとき
+
+1. 正本（`~/.claude/skills` 側。一部は `recruit/skills` 配下の実体からのシムリンク）を更新する
+2. 本リポの `plugins/<プラグイン名>/skills/` 配下へコピーし直す
+3. **MCPサーバーを再ビルド＆デプロイして配信内容を反映する**:
+
+```bash
+cd mcp-server
+node build-skills.mjs      # 21スキルを src/skills-data.json に再バンドル
+node test.mjs              # 12ケースの自動テスト（全PASSを確認）
+npx wrangler deploy        # Cloudflare Workers へ反映
+```
+
+4. コミット・push する
+
+### MCPサーバーの構成
+
+`mcp-server/` はランタイム依存パッケージ0のCloudflare Worker（Streamable HTTP・読み取り専用）です。
+
+| ファイル | 役割 |
+|---|---|
+| `build-skills.mjs` | `plugins/*/skills/*/SKILL.md` とテキスト参照を走査して `src/skills-data.json` を生成（決定論的ビルド） |
+| `src/index.js` | MCPサーバー本体。`/mcp` で JSON-RPC を処理し、3つのtoolsと21のpromptsを公開 |
+| `test.mjs` | プロトコル適合の自動テスト12件 |
+| `wrangler.jsonc` | デプロイ設定 |
+
+配信するのはテキスト（SKILL.md＋references）のみで、画像・フォント・Pythonスクリプトは含めません（スクリプトを伴うスキルは、その旨の注記を本文先頭に付けて返します）。
