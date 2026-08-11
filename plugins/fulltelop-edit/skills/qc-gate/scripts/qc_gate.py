@@ -5,7 +5,7 @@
 セッションが変わると品質がブレる問題を、機械チェックで強制的に止める小さな改札。
 焼く前/書き出す前に必ず通す。FAILがあれば exit 1（納品ブロック）、WARNは要目視で記録。
 
-設計の正本: memo/internal-skills/short-video-edit/references/再設計_品質ゲートQCパイプライン.md
+設計の正本: 社内メモ（非公開）
 しきい値の正本: ./thresholds.json（エージェントは上書きしない）
 
 サブコマンド（MVP=Codex推奨の最小サブセット）:

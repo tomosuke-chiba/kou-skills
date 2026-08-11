@@ -3,7 +3,9 @@
 ## macOS (Apple Silicon 推奨)
 
 ```bash
-# Homebrew が無ければ先に
+# Homebrew が無ければ先に（Homebrew公式のインストーラ）
+# ⚠️ リモートスクリプトの直接実行になるため、気になる場合は一度ファイルに保存して
+#    中身を確認してから実行する: curl -fsSL <URL> -o install.sh → 内容確認 → bash install.sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # 必須

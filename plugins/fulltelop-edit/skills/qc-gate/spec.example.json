@@ -12,7 +12,7 @@
   "threshold_profile": "vertical_reel",
   "paths": {
     "src": "/Users/you/Downloads/source_sample.MP4",
-    "words": "/tmp/short_edit_source_sample/words.json",
+    "words": "/tmp/short_edit_sample/words.json",
     "koetsu": "/tmp/sample_jet/koetsu_v2.json",
     "output": "/Users/you/Desktop/sample_interview_完成版_v2.mp4"
   }
