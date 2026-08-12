@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOU Skills 配布アーキテクチャ</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 1280px; height: 800px; overflow: hidden; background: #FFFFFF; }
+    body { font-family: "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif; color: #0A1F44; }
+    svg { display: block; width: 1280px; height: 800px; }
+    .title { font-size: 28px; font-weight: 700; fill: #0A1F44; }
+    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .14em; fill: #0B3FA8; }
+    .zone-label { font-size: 12px; font-weight: 700; letter-spacing: .1em; fill: #0B3FA8; }
+    .node-title { font-size: 16px; font-weight: 700; fill: #0A1F44; }
+    .node-sub { font-size: 12px; font-weight: 500; fill: #0B3FA8; }
+    .small { font-size: 11px; font-weight: 500; fill: #0A1F44; }
+    .tool { font-size: 12px; font-weight: 700; fill: #0A1F44; }
+    .arrow-label { font-size: 11px; font-weight: 700; fill: #0B3FA8; }
+  </style>
+</head>
+<body>
+<svg viewBox="0 0 1280 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">KOU Skills 配布アーキテクチャ</title>
+  <desc id="desc">作者環境の正本からリポジトリ、JSONバンドル、Cloudflare WorkersのMCPを経て3種類のClaudeクライアントへ配布する流れと、Codex向けローカルコピーの別系統。</desc>
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0B3FA8"/><stop offset="1" stop-color="#00A3E0"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0,10 4,0 8" fill="#0B3FA8"/></marker>
+    <marker id="arrow-light" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0,10 4,0 8" fill="#00A3E0"/></marker>
+  </defs>
+  <rect width="1280" height="800" fill="#FFFFFF"/>
+  <text class="eyebrow" x="48" y="44">ARCHITECTURE · 21 SKILLS</text>
+  <text class="title" x="48" y="82">KOU Skills 配布アーキテクチャ</text>
+  <text class="small" x="48" y="108">正本から公開MCPへ。Codexだけはローカルコピーの別経路で配布</text>
+
+  <!-- zones -->
+  <rect x="40" y="144" width="272" height="452" rx="8" fill="#E8EEF9" fill-opacity=".55" stroke="#C9D8F0"/>
+  <text class="zone-label" x="56" y="172">制作・公開</text>
+  <rect x="328" y="144" width="560" height="452" rx="8" fill="#E8EEF9" fill-opacity=".28" stroke="#C9D8F0"/>
+  <text class="zone-label" x="344" y="172">PUBLIC REPOSITORY</text>
+  <rect x="904" y="144" width="336" height="452" rx="8" fill="#E8EEF9" fill-opacity=".55" stroke="#C9D8F0"/>
+  <text class="zone-label" x="920" y="172">利用者</text>
+
+  <!-- primary connectors behind nodes -->
+  <line x1="280" y1="268" x2="360" y2="268" stroke="#0B3FA8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="552" y1="268" x2="624" y2="268" stroke="#0B3FA8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M816 268 H848 Q856 268 856 276 V340" fill="none" stroke="#0B3FA8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="888" y1="396" x2="936" y2="396" stroke="#00A3E0" stroke-width="2" marker-end="url(#arrow-light)"/>
+  <path d="M280 288 H300 Q308 288 308 296 V680 Q308 688 316 688 H936" fill="none" stroke="#0B3FA8" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+
+  <!-- labels with masks and clear connector gaps -->
+  <rect x="292" y="238" width="64" height="16" rx="2" fill="#FFFFFF"/><text class="arrow-label" x="324" y="250" text-anchor="middle">コピー</text>
+  <rect x="564" y="238" width="48" height="16" rx="2" fill="#FFFFFF"/><text class="arrow-label" x="588" y="250" text-anchor="middle">走査</text>
+  <rect x="824" y="292" width="64" height="16" rx="2" fill="#FFFFFF"/><text class="arrow-label" x="856" y="304" text-anchor="middle">デプロイ</text>
+  <rect x="888" y="366" width="48" height="16" rx="2" fill="#FFFFFF"/><text class="arrow-label" x="912" y="378" text-anchor="middle">登録</text>
+  <rect x="560" y="658" width="128" height="16" rx="2" fill="#FFFFFF"/><text class="arrow-label" x="624" y="670" text-anchor="middle">スクリプトで直接コピー</text>
+
+  <!-- nodes -->
+  <rect x="72" y="216" width="208" height="104" rx="8" fill="#FFFFFF" stroke="#0B3FA8" stroke-width="1.4"/>
+  <rect x="72" y="216" width="208" height="8" rx="4" fill="url(#brand)"/>
+  <text class="node-title" x="176" y="256" text-anchor="middle">作者環境の正本</text>
+  <text class="node-sub" x="176" y="280" text-anchor="middle">SKILL.md と補足資料</text>
+  <text class="small" x="176" y="300" text-anchor="middle">21スキルの編集元</text>
+
+  <rect x="360" y="204" width="192" height="128" rx="8" fill="#FFFFFF" stroke="#0B3FA8"/>
+  <text class="node-title" x="456" y="236" text-anchor="middle">plugins/</text>
+  <line x1="380" y1="252" x2="532" y2="252" stroke="#C9D8F0"/>
+  <text class="node-sub" x="456" y="276" text-anchor="middle">goal-align · 11本</text>
+  <text class="node-sub" x="456" y="300" text-anchor="middle">fulltelop-edit · 10本</text>
+  <text class="small" x="456" y="320" text-anchor="middle">公開リポジトリ内の配布元</text>
+
+  <rect x="624" y="216" width="192" height="104" rx="8" fill="#FFFFFF" stroke="#0B3FA8"/>
+  <text class="node-title" x="720" y="252" text-anchor="middle">build-skills.mjs</text>
+  <text class="node-sub" x="720" y="276" text-anchor="middle">21スキルを走査</text>
+  <text class="small" x="720" y="298" text-anchor="middle">skills-data.json を生成</text>
+
+  <rect x="624" y="344" width="264" height="192" rx="8" fill="#FFFFFF" stroke="#0B3FA8" stroke-width="1.4"/>
+  <rect x="624" y="344" width="264" height="8" rx="4" fill="url(#brand)"/>
+  <text class="node-title" x="756" y="384" text-anchor="middle">Cloudflare Workers</text>
+  <text class="node-sub" x="756" y="408" text-anchor="middle">読み取り専用リモートMCP</text>
+  <text class="small" x="756" y="430" text-anchor="middle">Streamable HTTP · 単一パス /mcp</text>
+  <line x1="648" y1="448" x2="864" y2="448" stroke="#C9D8F0"/>
+  <text class="tool" x="648" y="476">list_skills</text><text class="small" x="856" y="476" text-anchor="end">一覧</text>
+  <text class="tool" x="648" y="500">get_skill</text><text class="small" x="856" y="500" text-anchor="end">手順書</text>
+  <text class="tool" x="648" y="524">get_skill_reference</text><text class="small" x="856" y="524" text-anchor="end">補足資料</text>
+
+  <rect x="936" y="204" width="272" height="80" rx="8" fill="#FFFFFF" stroke="#C9D8F0"/>
+  <text class="node-title" x="1072" y="238" text-anchor="middle">claude.ai</text>
+  <text class="node-sub" x="1072" y="262" text-anchor="middle">ブラウザ</text>
+  <rect x="936" y="308" width="272" height="80" rx="8" fill="#FFFFFF" stroke="#C9D8F0"/>
+  <text class="node-title" x="1072" y="342" text-anchor="middle">Claude Desktop</text>
+  <text class="node-sub" x="1072" y="366" text-anchor="middle">アプリ</text>
+  <rect x="936" y="412" width="272" height="80" rx="8" fill="#FFFFFF" stroke="#C9D8F0"/>
+  <text class="node-title" x="1072" y="446" text-anchor="middle">Claude Code</text>
+  <text class="node-sub" x="1072" y="470" text-anchor="middle">ターミナル</text>
+  <path d="M936 396 H920 V244 H936 M920 348 H936 M920 452 H936" fill="none" stroke="#00A3E0" stroke-width="1.6"/>
+
+  <rect x="936" y="648" width="272" height="80" rx="8" fill="#E8EEF9" stroke="#0B3FA8" stroke-dasharray="6 4"/>
+  <text class="node-title" x="1072" y="682" text-anchor="middle">Codex</text>
+  <text class="node-sub" x="1072" y="706" text-anchor="middle">MCPを経由せずローカル利用</text>
+  <text class="small" x="72" y="704">install-codex.sh</text>
+  <text class="small" x="72" y="724">install-codex-fulltelop.sh</text>
+
+  <line x1="48" y1="760" x2="1232" y2="760" stroke="#C9D8F0"/>
+  <text class="small" x="48" y="784">実線：公開MCP経路</text>
+  <line x1="188" y1="780" x2="236" y2="780" stroke="#0B3FA8" stroke-width="2" marker-end="url(#arrow)"/>
+  <text class="small" x="280" y="784">破線：Codex向けローカルコピー経路</text>
+  <line x1="520" y1="780" x2="568" y2="780" stroke="#0B3FA8" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+</svg>
+</body>
+</html>

@@ -16,6 +16,22 @@ https://kou-skills-mcp.tomosuke-chiba-work.workers.dev/mcp
 
 ---
 
+## 🗺 全体構成
+
+### 配布のしくみ
+
+![配布アーキテクチャ](docs/diagrams/architecture.png)
+
+スキルの正本をリポジトリにコピーし、21本を1つにまとめてCloudflare Workersへデプロイしています。利用者はURLを1本登録するだけで、claude.ai・Claude Desktop・Claude Code のどこからでも同じ21本を引けます（Codexだけはローカルコピーの別経路）。
+
+### 21スキルの全体マップ
+
+![スキル全体マップ](docs/diagrams/skill-map.png)
+
+> 図は [`docs/diagrams/`](docs/diagrams/) に単体HTMLでも置いてあります（ブラウザで開くと拡大して見られます）。
+
+---
+
 ## 📦 つなぎ方（所要1分）
 
 登録するURLは全クライアント共通でこれ1本です。
@@ -111,7 +127,7 @@ git -C kou-claude-plugins remote set-url origin https://github.com/tomosuke-chib
 
 ---
 
-## 🧰 goal-align 同梱スキル一覧（v0.3.0・11本）
+## 🧰 思考・設計系スキル（11本）
 
 ### 🧭 オーケストレータ
 
@@ -213,10 +229,105 @@ KOUのコバルト→シアン青系ビジュアルで **16:9スライドPNG** �
 
 ---
 
-## 🎬 fulltelop-edit（動画編集パック・10本）
+## 🎬 動画編集系スキル（10本）
 
-word単位の文字起こし→ジェットカット→スマート字幕→整音→字幕プレビューUI→品質改札→横インタビュー焼き込み／縦リール／見出し帯／SRT・FCPXML出力までを担う動画編集スキルパックです。
-スキル一覧・使い方・インストール要件（ffmpeg / Python / Whisper）は [plugins/fulltelop-edit/README.md](plugins/fulltelop-edit/README.md) を参照してください。
+素材の動画を渡すところから、字幕入りの完成動画を書き出すところまでを10本でつなぎます。工程順に並んでいるので、上から順に使えば1本の動画が仕上がります。
+
+![動画編集パイプライン](docs/diagrams/video-pipeline.png)
+
+> ⚠️ このパックは**手順書だけでは動きません**。実行には手元の環境に ffmpeg / Python / Whisper が必要です → [インストール要件](plugins/fulltelop-edit/docs/install-requirements.md)
+
+### 📝 前処理
+
+#### transcribe-words
+
+![transcribe-words](docs/images/skills/12-transcribe-words.png)
+
+動画・音声を**単語1つずつに時刻をつけて**文字起こしします。この時刻が後工程すべての土台になります。Macは mlx_whisper、Windowsは faster-whisper に自動で切り替わります。
+
+> こんなとき: 「この動画を文字起こしして」「編集用の元データを作って」
+
+#### jetcut-design
+
+![jetcut-design](docs/images/skills/13-jetcut-design.png)
+
+無音・フィラー（「えーと」等）・言い直しを**物理的に切って詰めます**。既定では1.0秒を超える無音を0.5秒の自然な間に縮めるので、間延びしない見やすい尺になります。
+
+> こんなとき: 「テンポよくして」「無駄な間をカットして」
+
+### 💬 字幕設計
+
+#### smart-caption
+
+![smart-caption](docs/images/skills/14-smart-caption.png)
+
+文字起こしから**意味の通る字幕**を作ります。文脈から誤変換を直し、17文字前後で意味の切れ目に分割し、各テロップを最初と最後の語の両方で時刻に固定するのでズレません。
+
+> こんなとき: 「字幕を作って」「テロップを整えて」
+
+#### telop-preview
+
+![telop-preview](docs/images/skills/15-telop-preview.png)
+
+字幕をブラウザ画面で見ながら直せます。「音に合わせる」ボタンで全テロップを一括で音声に吸着、分割は無音位置に自動で寄ります。焼き込む前の最終確認用です。
+
+> こんなとき: 「字幕を目で確認したい」「ここだけ直したい」
+
+### 🔊 音声仕上げ
+
+#### audio-master
+
+![audio-master](docs/images/skills/16-audio-master.png)
+
+2回測ってから調整することで、素材の音量がバラついていても**SNS標準の音量に確実に揃えます**。軽いコンプとリミッターで音割れも防ぎます。
+
+> こんなとき: 「音量がバラバラ」「小さくて聞こえない」
+
+### 🚧 品質改札
+
+#### qc-gate
+
+![qc-gate](docs/images/skills/17-qc-gate.png)
+
+焼き込む前に必ず通す**チェック関門**です。字幕（字数・速度）、同期（テロップと発話のズレ）、音声（音量・ピーク）、映像（解像度・フレームレート）を機械的に検査します。
+
+> こんなとき: 「焼く前に問題ないか確認して」
+
+### 🔥 焼き込み（用途で3つに分岐）
+
+#### render-horizontal-interview
+
+![render-horizontal-interview](docs/images/skills/18-render-horizontal-interview.png)
+
+横長のインタビュー・対談動画を、**話者ごとに色を変えたフルテロップ**で焼き込みます。カット→整音→時刻の微調整→焼き込みまで一括で走ります。
+
+> こんなとき: 「インタビュー動画を仕上げて」
+
+#### render-vertical-reel
+
+![render-vertical-reel](docs/images/skills/19-render-vertical-reel.png)
+
+Instagram / TikTok 向けの**縦型リール**を焼き込みます。白テロップ＋影で、スマホの小さい画面でも読めます。
+
+> こんなとき: 「リール用に縦で書き出して」
+
+#### heading-overlay
+
+![heading-overlay](docs/images/skills/20-heading-overlay.png)
+
+画面左上にKOU標準デザインの**見出し帯**（濃紺グラデ＋白文字）を全編に焼き込みます。デザインは固定なので、見出しの文字を渡すだけで毎回同じ見た目になります。完成済みの動画への後がけもできます。
+
+> こんなとき: 「タイトルを入れて」「見出しつけて」
+
+### 📦 納品
+
+#### export-deliver
+
+![export-deliver](docs/images/skills/21-export-deliver.png)
+
+字幕ファイル（YouTube投稿用）・編集データ（編集ソフトで開く用）・カバー画像を書き出します。動画そのものの書き出しは上の焼き込み3種が担当します。
+
+> こんなとき: 「字幕ファイルだけ欲しい」「編集ソフトに渡したい」
 
 ---
 

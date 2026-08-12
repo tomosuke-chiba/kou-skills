@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOU Skills 全体マップ</title>
+  <style>
+    * { box-sizing: border-box; } html,body { margin:0; width:1280px; height:1040px; overflow:hidden; background:#FFFFFF; }
+    body { font-family:"Hiragino Sans","Noto Sans JP",system-ui,sans-serif; color:#0A1F44; }
+    svg { display:block; width:1280px; height:1040px; }
+    .title{font-size:28px;font-weight:700;fill:#0A1F44}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;fill:#0B3FA8}
+    .root{font-size:18px;font-weight:700;fill:#FFFFFF}.branch{font-size:18px;font-weight:700;fill:#0A1F44}.count{font-size:12px;font-weight:700;fill:#0B3FA8}
+    .name{font-size:13px;font-weight:700;fill:#0A1F44}.role{font-size:11px;font-weight:500;fill:#0B3FA8}
+  </style>
+</head><body>
+<svg viewBox="0 0 1280 1040" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">KOU Skills 全体マップ</title><desc id="desc">21スキルを思考・設計系11本と動画編集系10本に分類したツリー。</desc>
+  <defs><linearGradient id="brand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0B3FA8"/><stop offset="1" stop-color="#00A3E0"/></linearGradient></defs>
+  <rect width="1280" height="1040" fill="#FFFFFF"/>
+  <text class="eyebrow" x="48" y="44">TREE · 21 SKILLS</text><text class="title" x="48" y="82">KOU Skills 全体マップ</text>
+  <!-- connectors first -->
+  <path d="M640 160 V192 Q640 200 632 200 H328 Q320 200 320 208 V236 M640 200 H952 Q960 200 960 208 V236" fill="none" stroke="#0B3FA8" stroke-width="2"/>
+  <!-- root and branches -->
+  <rect x="480" y="112" width="320" height="48" rx="8" fill="url(#brand)"/><text class="root" x="640" y="143" text-anchor="middle">KOU Skills · 21本</text>
+  <rect x="64" y="236" width="512" height="64" rx="8" fill="#E8EEF9" stroke="#0B3FA8"/>
+  <text class="branch" x="88" y="264">思考・設計系</text><text class="count" x="88" y="286">11 SKILLS · goal-align</text>
+  <rect x="704" y="236" width="512" height="64" rx="8" fill="#E8EEF9" stroke="#0B3FA8"/>
+  <text class="branch" x="728" y="264">動画編集系</text><text class="count" x="728" y="286">10 SKILLS · fulltelop-edit</text>
+  <!-- left skill cards -->
+  <g>
+    <rect x="64" y="324" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><rect x="64" y="324" width="6" height="56" rx="3" fill="#0B3FA8"/><text class="name" x="84" y="347">grill-dod-solution-research</text><text class="role" x="84" y="367">認識合わせ→完了定義→探索を1本で回す</text>
+    <rect x="64" y="392" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="84" y="415">grill-me</text><text class="role" x="84" y="435">現在地・ゴール・ルートの地図を作る</text>
+    <rect x="64" y="460" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="84" y="483">dod</text><text class="role" x="84" y="503">目的・目標・答えの条件・検証方法を確定</text>
+    <rect x="64" y="528" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="84" y="551">solution-research</text><text class="role" x="84" y="571">クイック5手法で解決策を探索</text>
+    <rect x="64" y="596" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="84" y="619">solution-deep-research</text><text class="role" x="84" y="639">26型＋ペルソナ11人で深く探索</text>
+    <rect x="64" y="664" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="84" y="687">kinoshita-solution</text><text class="role" x="84" y="707">固定4案を展開し、着眼法・苦情法を呼ぶ</text>
+    <rect x="64" y="732" width="248" height="64" rx="6" fill="#E8EEF9" stroke="#C9D8F0"/><text class="name" x="84" y="757">chakugan-ho</text><text class="role" x="84" y="779">成功例から発想</text>
+    <rect x="328" y="732" width="248" height="64" rx="6" fill="#E8EEF9" stroke="#C9D8F0"/><text class="name" x="348" y="757">kujo-ho</text><text class="role" x="348" y="779">課題・苦情から発想</text>
+    <path d="M320 720 V736 M320 728 H188 V732 M320 728 H452 V732" fill="none" stroke="#0B3FA8" stroke-width="1.2"/>
+    <rect x="64" y="812" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="84" y="835">teach-back</text><text class="role" x="84" y="855">理解度を確認・採点</text>
+    <rect x="64" y="880" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="84" y="903">slide-message-architect</text><text class="role" x="84" y="923">原稿をスライド設計表に分解</text>
+    <rect x="64" y="948" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="84" y="971">blue-gradient-slide-generator</text><text class="role" x="84" y="991">設計表からスライドPNGを生成</text>
+  </g>
+  <!-- right skill cards -->
+  <g>
+    <rect x="704" y="324" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><rect x="704" y="324" width="6" height="56" rx="3" fill="#00A3E0"/><text class="name" x="724" y="347">transcribe-words</text><text class="role" x="724" y="367">word単位で文字起こし</text>
+    <rect x="704" y="392" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="724" y="415">jetcut-design</text><text class="role" x="724" y="435">無音・言い直しを物理カット</text>
+    <rect x="704" y="460" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="724" y="483">smart-caption</text><text class="role" x="724" y="503">意味の切れ目で字幕化</text>
+    <rect x="704" y="528" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="724" y="551">telop-preview</text><text class="role" x="724" y="571">ブラウザUIで確認・微調整</text>
+    <rect x="704" y="596" width="512" height="56" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="724" y="619">audio-master</text><text class="role" x="724" y="639">2パス測定で音量を統一</text>
+    <rect x="704" y="664" width="512" height="56" rx="6" fill="#E8EEF9" stroke="#0B3FA8"/><text class="name" x="724" y="687">qc-gate</text><text class="role" x="724" y="707">焼く前の品質チェック改札</text>
+    <rect x="704" y="732" width="160" height="80" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="720" y="757">render-horizontal-</text><text class="name" x="720" y="775">interview</text><text class="role" x="720" y="797">横インタビュー</text>
+    <rect x="880" y="732" width="160" height="80" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="896" y="757">render-vertical-</text><text class="name" x="896" y="775">reel</text><text class="role" x="896" y="797">縦リール</text>
+    <rect x="1056" y="732" width="160" height="80" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="1072" y="757">heading-overlay</text><text class="role" x="1072" y="779">左上に見出し帯</text><text class="role" x="1072" y="797">を焼き込み</text>
+    <path d="M960 720 V728 H784 V732 M960 728 V732 M960 728 H1136 V732" fill="none" stroke="#00A3E0" stroke-width="1.2"/>
+    <rect x="704" y="828" width="512" height="72" rx="6" fill="#FFFFFF" stroke="#C9D8F0"/><text class="name" x="724" y="855">export-deliver</text><text class="role" x="724" y="879">字幕・編集データ・カバー画像を書き出し</text>
+    <path d="M784 812 V820 H960 V828 M960 812 V828 M1136 812 V820 H960" fill="none" stroke="#00A3E0" stroke-width="1.2"/>
+  </g>
+</svg></body></html>
