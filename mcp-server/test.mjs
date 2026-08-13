@@ -74,11 +74,11 @@ await test("4 tools/list returns exactly three tools", async () => {
   ]);
 });
 
-await test("5 list_skills returns all 21 skill names", async () => {
+await test("5 list_skills returns all 22 skill names", async () => {
   const { body } = await rpc("tools/call", { name: "list_skills", arguments: {} });
   const text = body.result.content[0].text;
   const skills = (await import("./src/skills-data.json", { with: { type: "json" } })).default;
-  assert.equal(skills.length, 21);
+  assert.equal(skills.length, 22);
   for (const skill of skills) assert.match(text, new RegExp(`(^|\\W)${skill.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|\\W)`));
 });
 
@@ -89,34 +89,41 @@ await test("6 get_skill returns the dod SKILL.md", async () => {
   assert.match(body.result.content[0].text, /目的逆算思考DoD/);
 });
 
-await test("7 get_skill rejects an unknown skill", async () => {
+await test("7 get_skill returns the project-flow-diagram SKILL.md", async () => {
+  const { body } = await rpc("tools/call", { name: "get_skill", arguments: { name: "project-flow-diagram" } });
+  assert.equal(body.result.isError, undefined);
+  assert.match(body.result.content[0].text, /^---\nname: project-flow-diagram\n/);
+  assert.match(body.result.content[0].text, /全体の流れ・現在地・次の一手/);
+});
+
+await test("8 get_skill rejects an unknown skill", async () => {
   const { body } = await rpc("tools/call", { name: "get_skill", arguments: { name: "does-not-exist" } });
   assert.ok(body.error || body.result?.isError === true);
 });
 
-await test("8 prompts/list returns 21 prompts", async () => {
+await test("9 prompts/list returns 22 prompts", async () => {
   const { body } = await rpc("prompts/list");
-  assert.equal(body.result.prompts.length, 21);
+  assert.equal(body.result.prompts.length, 22);
 });
 
-await test("9 prompts/get returns the requested skill body", async () => {
+await test("10 prompts/get returns the requested skill body", async () => {
   const { body } = await rpc("prompts/get", { name: "dod", arguments: {} });
   assert.equal(body.result.messages[0].role, "user");
   assert.match(body.result.messages[0].content.text, /^---\nname: dod\n/);
 });
 
-await test("10 unknown method returns -32601", async () => {
+await test("11 unknown method returns -32601", async () => {
   const { body } = await rpc("unknown/method");
   assert.equal(body.error.code, -32601);
 });
 
-await test("11 GET /mcp returns 405", async () => {
+await test("12 GET /mcp returns 405", async () => {
   const handler = await getWorker();
   const response = await handler.fetch(new Request(MCP_URL), {}, {});
   assert.equal(response.status, 405);
 });
 
-await test("12 OPTIONS /mcp returns 204 with CORS", async () => {
+await test("13 OPTIONS /mcp returns 204 with CORS", async () => {
   const handler = await getWorker();
   const response = await handler.fetch(new Request(MCP_URL, { method: "OPTIONS" }), {}, {});
   assert.equal(response.status, 204);

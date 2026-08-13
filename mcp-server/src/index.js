@@ -13,7 +13,7 @@ const corsHeaders = {
 const tools = [
   {
     name: "list_skills",
-    description: `利用できるAIエージェント用スキルを探すときに使います。用途・プラグイン・説明を一覧し、次にget_skillで読むスキルを選べます。利用可能な21スキル: ${skillNames.join(", ")}`,
+    description: `利用できるAIエージェント用スキルを探すときに使います。用途・プラグイン・説明を一覧し、次にget_skillで読むスキルを選べます。利用可能な${skills.length}スキル: ${skillNames.join(", ")}`,
     inputSchema: {
       type: "object",
       properties: {
@@ -182,4 +182,3 @@ export default {
     return handleRpc(message);
   },
 };
-

@@ -1,0 +1,4 @@
+interface:
+  display_name: "案件フロー図"
+  short_description: "案件の全体像・現在地・次の一手を一枚のフロー図で明確にする"
+  default_prompt: "Use $project-flow-diagram to visualize this project’s flow, current status, and single next action."

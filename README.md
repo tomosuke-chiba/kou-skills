@@ -1,6 +1,6 @@
 # kou-skills
 
-KOUのコアメンバー向け **AIスキル集（全21本）** です。**URLを1本登録するだけ**で、claude.ai・Claude Desktop・Claude Code のどこからでも使えます。
+KOUのコアメンバー向け **AIスキル集（全22本）** です。**URLを1本登録するだけ**で、claude.ai・Claude Desktop・Claude Code のどこからでも使えます。
 
 ```
 https://kou-skills-mcp.tomosuke-chiba-work.workers.dev/mcp
@@ -8,7 +8,7 @@ https://kou-skills-mcp.tomosuke-chiba-work.workers.dev/mcp
 
 | 分類 | 内容 |
 |---|---|
-| 思考・設計系（11本） | 認識合わせ→完了定義→解決策探索のスキル＋KOU青系スライド制作スキル（下に画像つき紹介あり） |
+| 思考・設計系（12本） | 認識合わせ→完了定義→解決策探索、案件フロー図、KOU青系スライド制作のスキル |
 | 動画編集系（10本） | 文字起こし→カット→字幕→整音→横インタビュー／縦リール焼き込み（詳細は [plugins/fulltelop-edit/README.md](plugins/fulltelop-edit/README.md)） |
 
 > このリポは public です。招待も認証設定も不要で、誰でもそのまま接続できます。
@@ -22,9 +22,9 @@ https://kou-skills-mcp.tomosuke-chiba-work.workers.dev/mcp
 
 ![配布アーキテクチャ](docs/diagrams/architecture.png)
 
-スキルの正本をリポジトリにコピーし、21本を1つにまとめてCloudflare Workersへデプロイしています。利用者はURLを1本登録するだけで、claude.ai・Claude Desktop・Claude Code のどこからでも同じ21本を引けます（Codexだけはローカルコピーの別経路）。
+スキルの正本をリポジトリにコピーし、22本を1つにまとめてCloudflare Workersへデプロイしています。利用者はURLを1本登録するだけで、claude.ai・Claude Desktop・Claude Code のどこからでも同じ22本を引けます（Codexだけはローカルコピーの別経路）。
 
-### 21スキルの全体マップ
+### 22スキルの全体マップ
 
 ![スキル全体マップ](docs/diagrams/skill-map.png)
 
@@ -46,7 +46,7 @@ https://kou-skills-mcp.tomosuke-chiba-work.workers.dev/mcp
 2. **「カスタムコネクタを追加」** をクリック
 3. 名前に `kou-skills`、URLに上のアドレスを貼って追加
 
-認証（ログイン）は不要です。追加後、チャットで「使えるスキルを一覧して」と言えば21本が出ます。
+認証（ログイン）は不要です。追加後、チャットで「使えるスキルを一覧して」と言えば22本が出ます。
 
 ### B. Claude Desktop（アプリ）の人
 
@@ -67,7 +67,7 @@ Claude Code では各スキルが `/mcp__kou-skills__<スキル名>` という�
 
 | 道具 | 何をするか |
 |---|---|
-| `list_skills` | 21スキルの一覧と説明を出す（「どんなスキルがある？」で呼ばれます） |
+| `list_skills` | 22スキルの一覧と説明を出す（「どんなスキルがある？」で呼ばれます） |
 | `get_skill` | 指定したスキルの手順書を丸ごと読み込む（「dodスキルで完了定義を作って」等） |
 | `get_skill_reference` | そのスキルの補足資料を読み込む |
 
@@ -84,7 +84,7 @@ git clone https://github.com/tomosuke-chiba/kou-skills.git
 bash kou-skills/install-codex.sh
 ```
 
-スクリプトが11スキルを `~/.agents/skills`（Codex公式の置き場）へコピーし、`~/.codex/skills` がある環境にはシムリンクも張ります。既存の同名スキルは上書きしません。
+スクリプトが12スキルを `~/.agents/skills`（Codex公式の置き場）へコピーし、`~/.codex/skills` がある環境にはシムリンクも張ります。既存の同名スキルは上書きしません。
 
 動画編集パック fulltelop-edit を Codex で使う場合は、こちらを実行します（フォント等のアセットも `~/.agents/assets` へ配置します）:
 
@@ -108,7 +108,7 @@ Codex には Claude Code の「Skillツール」が無いため、スキル間�
 
 配布方法を **プラグイン → MCPコネクタ** に一本化しました。URL1本で全クライアントに配れるためです。
 
-**やること**: 上の「つなぎ方」でMCPを登録してください。それだけで21本すべて使えます。
+**やること**: 上の「つなぎ方」でMCPを登録してください。それだけで22本すべて使えます。
 
 **古いプラグインの掃除**（任意・入れっぱなしでも壊れません）:
 
@@ -127,7 +127,7 @@ git -C kou-claude-plugins remote set-url origin https://github.com/tomosuke-chib
 
 ---
 
-## 🧰 思考・設計系スキル（11本）
+## 🧰 思考・設計系スキル（12本）
 
 ### 🧭 オーケストレータ
 
@@ -156,6 +156,14 @@ Googleマップ型の壁打ちで、現在地・定量ゴール・ルート選�
 計画・設計・重要な依頼を**自分の言葉で説明**してもらい、目的・構造・判断・リスク・検証・復旧の理解を採点して、足りない部分だけ再学習します。実装や公開の前の「理解ゲート」です。
 
 > こんなとき: 「要するにこうで合ってる？」「理解確認してから進めたい」
+
+### 🗺 進捗可視化
+
+#### project-flow-diagram
+
+進行中の案件を、**全体の流れ・現在地・次の一手**がひと目で分かるフローチャートにします。完了・進行中・未着手・相手待ち・分岐を区別し、不明点は推測せず「？」のまま残します。状況が動いた後は、同じ構成の更新版を出せます。
+
+> こんなとき: 「案件を図解にして」「進捗をフロー図にして」「図解を最新にして」
 
 ### 🎯 完了定義
 
@@ -366,8 +374,8 @@ solution-research（軽量版・クイック5手法で解決策を探索・推�
 
 ```bash
 cd mcp-server
-node build-skills.mjs      # 21スキルを src/skills-data.json に再バンドル
-node test.mjs              # 12ケースの自動テスト（全PASSを確認）
+node build-skills.mjs      # 22スキルを src/skills-data.json に再バンドル
+node test.mjs              # 13ケースの自動テスト（全PASSを確認）
 npx wrangler deploy        # Cloudflare Workers へ反映
 ```
 
@@ -380,8 +388,8 @@ npx wrangler deploy        # Cloudflare Workers へ反映
 | ファイル | 役割 |
 |---|---|
 | `build-skills.mjs` | `plugins/*/skills/*/SKILL.md` とテキスト参照を走査して `src/skills-data.json` を生成（決定論的ビルド） |
-| `src/index.js` | MCPサーバー本体。`/mcp` で JSON-RPC を処理し、3つのtoolsと21のpromptsを公開 |
-| `test.mjs` | プロトコル適合の自動テスト12件 |
+| `src/index.js` | MCPサーバー本体。`/mcp` で JSON-RPC を処理し、3つのtoolsと22のpromptsを公開 |
+| `test.mjs` | プロトコル適合の自動テスト13件 |
 | `wrangler.jsonc` | デプロイ設定 |
 
 配信するのはテキスト（SKILL.md＋references）のみで、画像・フォント・Pythonスクリプトは含めません（スクリプトを伴うスキルは、その旨の注記を本文先頭に付けて返します）。
