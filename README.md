@@ -161,6 +161,8 @@ Googleマップ型の壁打ちで、現在地・定量ゴール・ルート選�
 
 #### project-flow-diagram
 
+![project-flow-diagram](docs/images/skills/22-project-flow-diagram.png)
+
 進行中の案件を、**全体の流れ・現在地・次の一手**がひと目で分かるフローチャートにします。完了・進行中・未着手・相手待ち・分岐を区別し、不明点は推測せず「？」のまま残します。状況が動いた後は、同じ構成の更新版を出せます。
 
 > こんなとき: 「案件を図解にして」「進捗をフロー図にして」「図解を最新にして」
@@ -366,20 +368,23 @@ solution-research（軽量版・クイック5手法で解決策を探索・推�
 
 ## 🛠 メンテナンス（管理者向け）
 
-### スキルを更新したとき
+### スキルを追加・更新したとき
 
 1. 正本（`~/.claude/skills` 側。一部は `recruit/skills` 配下の実体からのシムリンク）を更新する
 2. 本リポの `plugins/<プラグイン名>/skills/` 配下へコピーし直す
-3. **MCPサーバーを再ビルド＆デプロイして配信内容を反映する**:
+3. **新規Skillでは必ず専用画像を1枚追加する**。`$blue-gradient-slide-generator`で1600×900以上の16:9 PNGを作り、次の未使用番号を使って`docs/images/skills/<NN>-<skill-name>.png`へ置き、READMEの対象Skill説明直下に掲載する
+4. **MCPサーバーを再ビルド＆デプロイして配信内容を反映する**:
 
 ```bash
 cd mcp-server
 node build-skills.mjs      # 22スキルを src/skills-data.json に再バンドル
-node test.mjs              # 13ケースの自動テスト（全PASSを確認）
+node test.mjs              # 14ケースの自動テスト（全Skillの専用画像チェックを含む）
 npx wrangler deploy        # Cloudflare Workers へ反映
 ```
 
-4. コミット・push する
+5. コミット・push する
+
+> **絶対ルール:** Skill本体と専用画像は1対1です。画像がない、複数ある、壊れている、READMEの対応Skill欄に掲載されていない、16:9でない場合はローカルテストとGitHub Actionsが失敗します。
 
 ### MCPサーバーの構成
 
@@ -389,7 +394,7 @@ npx wrangler deploy        # Cloudflare Workers へ反映
 |---|---|
 | `build-skills.mjs` | `plugins/*/skills/*/SKILL.md` とテキスト参照を走査して `src/skills-data.json` を生成（決定論的ビルド） |
 | `src/index.js` | MCPサーバー本体。`/mcp` で JSON-RPC を処理し、3つのtoolsと22のpromptsを公開 |
-| `test.mjs` | プロトコル適合の自動テスト13件 |
+| `test.mjs` | プロトコル適合＋全Skill専用画像ゲートの自動テスト14件 |
 | `wrangler.jsonc` | デプロイ設定 |
 
 配信するのはテキスト（SKILL.md＋references）のみで、画像・フォント・Pythonスクリプトは含めません（スクリプトを伴うスキルは、その旨の注記を本文先頭に付けて返します）。

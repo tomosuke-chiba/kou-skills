@@ -1,9 +1,187 @@
 import assert from "node:assert/strict";
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { inflateSync } from "node:zlib";
 
 const MCP_URL = "https://example.test/mcp";
+const serverDir = path.dirname(fileURLToPath(import.meta.url));
+const repositoryDir = path.dirname(serverDir);
 let worker;
 let pass = 0;
 let fail = 0;
+
+const pngSignature = Buffer.from("89504e470d0a1a0a", "hex");
+const crcTable = new Uint32Array(256);
+for (let index = 0; index < crcTable.length; index += 1) {
+  let value = index;
+  for (let bit = 0; bit < 8; bit += 1) {
+    value = (value & 1) === 1 ? 0xedb88320 ^ (value >>> 1) : value >>> 1;
+  }
+  crcTable[index] = value >>> 0;
+}
+
+function crc32(buffer) {
+  let crc = 0xffffffff;
+  for (const byte of buffer) crc = crcTable[(crc ^ byte) & 0xff] ^ (crc >>> 8);
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+function assertDecodedPixels(decoded, { width, height, bitDepth, colorType, interlace }, imageFile) {
+  const channelsByColorType = new Map([[0, 1], [2, 3], [3, 1], [4, 2], [6, 4]]);
+  const validBitDepths = new Map([
+    [0, [1, 2, 4, 8, 16]],
+    [2, [8, 16]],
+    [3, [1, 2, 4, 8]],
+    [4, [8, 16]],
+    [6, [8, 16]],
+  ]);
+  assert.ok(channelsByColorType.has(colorType), `invalid PNG color type: ${imageFile}`);
+  assert.ok(validBitDepths.get(colorType).includes(bitDepth), `invalid PNG bit depth for color type: ${imageFile}`);
+
+  const passes = interlace === 0
+    ? [[0, 0, 1, 1]]
+    : [
+        [0, 0, 8, 8],
+        [4, 0, 8, 8],
+        [0, 4, 4, 8],
+        [2, 0, 4, 4],
+        [0, 2, 2, 4],
+        [1, 0, 2, 2],
+        [0, 1, 1, 2],
+      ];
+  const bitsPerPixel = channelsByColorType.get(colorType) * bitDepth;
+  let offset = 0;
+
+  for (const [xStart, yStart, xStep, yStep] of passes) {
+    const passWidth = width <= xStart ? 0 : Math.ceil((width - xStart) / xStep);
+    const passHeight = height <= yStart ? 0 : Math.ceil((height - yStart) / yStep);
+    if (passWidth === 0 || passHeight === 0) continue;
+    const scanlineLength = Math.ceil((passWidth * bitsPerPixel) / 8);
+    for (let row = 0; row < passHeight; row += 1) {
+      assert.ok(offset < decoded.length, `PNG pixel rows are truncated: ${imageFile}`);
+      assert.ok(decoded[offset] <= 4, `invalid PNG scanline filter: ${imageFile}`);
+      offset += 1 + scanlineLength;
+      assert.ok(offset <= decoded.length, `PNG scanline data is truncated: ${imageFile}`);
+    }
+  }
+
+  assert.equal(offset, decoded.length, `PNG pixel data length does not match its dimensions: ${imageFile}`);
+}
+
+function visibleMarkdownLines(markdown) {
+  const visible = [];
+  let inComment = false;
+  let fenceCharacter;
+  let fenceLength = 0;
+
+  for (const rawLine of markdown.split("\n")) {
+    let line = "";
+    let cursor = 0;
+    while (cursor < rawLine.length) {
+      if (inComment) {
+        const end = rawLine.indexOf("-->", cursor);
+        if (end === -1) {
+          cursor = rawLine.length;
+          continue;
+        }
+        inComment = false;
+        cursor = end + 3;
+      } else {
+        const start = rawLine.indexOf("<!--", cursor);
+        if (start === -1) {
+          line += rawLine.slice(cursor);
+          cursor = rawLine.length;
+        } else {
+          line += rawLine.slice(cursor, start);
+          inComment = true;
+          cursor = start + 4;
+        }
+      }
+    }
+
+    if (fenceCharacter) {
+      const closingFence = line.match(/^ {0,3}(`{3,}|~{3,})\s*$/);
+      if (closingFence && closingFence[1][0] === fenceCharacter && closingFence[1].length >= fenceLength) {
+        fenceCharacter = undefined;
+        fenceLength = 0;
+      }
+      continue;
+    }
+
+    const openingFence = line.match(/^ {0,3}(`{3,}|~{3,})/);
+    if (openingFence) {
+      fenceCharacter = openingFence[1][0];
+      fenceLength = openingFence[1].length;
+      continue;
+    }
+    if (/^( {4}|\t)/.test(line)) continue;
+    visible.push(line);
+  }
+
+  return visible;
+}
+
+function inspectPng(image, imageFile) {
+  assert.ok(image.length >= 33, `PNG is truncated: ${imageFile}`);
+  assert.ok(image.subarray(0, 8).equals(pngSignature), `not a PNG: ${imageFile}`);
+
+  let offset = 8;
+  let chunkIndex = 0;
+  let width;
+  let height;
+  let bitDepth;
+  let colorType;
+  let interlace;
+  let sawIend = false;
+  const idatChunks = [];
+
+  while (offset < image.length) {
+    assert.ok(offset + 12 <= image.length, `PNG chunk header is truncated: ${imageFile}`);
+    const length = image.readUInt32BE(offset);
+    const typeStart = offset + 4;
+    const dataStart = offset + 8;
+    const dataEnd = dataStart + length;
+    const chunkEnd = dataEnd + 4;
+    assert.ok(chunkEnd <= image.length, `PNG chunk data is truncated: ${imageFile}`);
+
+    const type = image.subarray(typeStart, dataStart).toString("ascii");
+    assert.match(type, /^[A-Za-z]{4}$/, `invalid PNG chunk type: ${imageFile}`);
+    const expectedCrc = image.readUInt32BE(dataEnd);
+    const actualCrc = crc32(image.subarray(typeStart, dataEnd));
+    assert.equal(actualCrc, expectedCrc, `PNG chunk CRC mismatch (${type}): ${imageFile}`);
+
+    if (chunkIndex === 0) assert.equal(type, "IHDR", `PNG must start with IHDR: ${imageFile}`);
+    if (type === "IHDR") {
+      assert.equal(length, 13, `invalid IHDR length: ${imageFile}`);
+      width = image.readUInt32BE(dataStart);
+      height = image.readUInt32BE(dataStart + 4);
+      bitDepth = image[dataStart + 8];
+      colorType = image[dataStart + 9];
+      assert.equal(image[dataStart + 10], 0, `unsupported PNG compression method: ${imageFile}`);
+      assert.equal(image[dataStart + 11], 0, `unsupported PNG filter method: ${imageFile}`);
+      interlace = image[dataStart + 12];
+      assert.ok([0, 1].includes(interlace), `invalid PNG interlace method: ${imageFile}`);
+    } else if (type === "IDAT") {
+      idatChunks.push(image.subarray(dataStart, dataEnd));
+    } else if (type === "IEND") {
+      assert.equal(length, 0, `invalid IEND length: ${imageFile}`);
+      sawIend = true;
+      assert.equal(chunkEnd, image.length, `unexpected bytes after IEND: ${imageFile}`);
+    }
+
+    offset = chunkEnd;
+    chunkIndex += 1;
+    if (sawIend) break;
+  }
+
+  assert.ok(width > 0 && height > 0, `invalid PNG dimensions: ${imageFile}`);
+  assert.ok(idatChunks.length > 0, `PNG has no image data: ${imageFile}`);
+  assert.ok(sawIend, `PNG has no IEND chunk: ${imageFile}`);
+  const decoded = inflateSync(Buffer.concat(idatChunks));
+  assertDecodedPixels(decoded, { width, height, bitDepth, colorType, interlace }, imageFile);
+  return { width, height };
+}
 
 async function getWorker() {
   if (!worker) {
@@ -129,6 +307,58 @@ await test("13 OPTIONS /mcp returns 204 with CORS", async () => {
   assert.equal(response.status, 204);
   assert.equal(response.headers.get("Access-Control-Allow-Origin"), "*");
   assert.match(response.headers.get("Access-Control-Allow-Methods"), /POST/);
+});
+
+await test("14 every skill has exactly one dedicated 16:9 PNG shown in README", async () => {
+  const pluginDirectory = path.join(repositoryDir, "plugins");
+  const pluginEntries = (await readdir(pluginDirectory, { withFileTypes: true })).filter((entry) => entry.isDirectory());
+  const sourceSkillNames = [];
+  for (const pluginEntry of pluginEntries) {
+    const skillsDirectory = path.join(pluginDirectory, pluginEntry.name, "skills");
+    const skillEntries = (await readdir(skillsDirectory, { withFileTypes: true })).filter((entry) => entry.isDirectory());
+    for (const skillEntry of skillEntries) {
+      await readFile(path.join(skillsDirectory, skillEntry.name, "SKILL.md"), "utf8");
+      sourceSkillNames.push(skillEntry.name);
+    }
+  }
+  sourceSkillNames.sort();
+
+  const bundledSkills = (await import("./src/skills-data.json", { with: { type: "json" } })).default;
+  const bundledSkillNames = bundledSkills.map(({ name }) => name).sort();
+  assert.deepEqual(bundledSkillNames, sourceSkillNames, "skills-data.json must be rebuilt after every Skill change");
+
+  const imageDirectory = path.join(repositoryDir, "docs", "images", "skills");
+  const imageFiles = (await readdir(imageDirectory)).filter((name) => name.endsWith(".png")).sort();
+  const readme = await readFile(path.join(repositoryDir, "README.md"), "utf8");
+  const visibleReadmeLines = visibleMarkdownLines(readme);
+  const coveredNames = [];
+  const imageNumbers = [];
+
+  for (const imageFile of imageFiles) {
+    const match = imageFile.match(/^(\d{2})-(.+)\.png$/);
+    assert.ok(match, `dedicated image must use NN-skill-name.png: ${imageFile}`);
+    imageNumbers.push(Number(match[1]));
+    const skillName = match[2];
+    assert.ok(sourceSkillNames.includes(skillName), `dedicated image has no matching skill: ${imageFile}`);
+    coveredNames.push(skillName);
+
+    const image = await readFile(path.join(imageDirectory, imageFile));
+    const { width, height } = inspectPng(image, imageFile);
+    assert.ok(width >= 1600 && height >= 900, `dedicated image is below the required production size: ${imageFile} is ${width}x${height}`);
+    assert.ok(Math.abs(width - (height * 16) / 9) <= 1, `dedicated image must be 16:9 within one raster pixel: ${imageFile} is ${width}x${height}`);
+
+    const markdown = `![${skillName}](docs/images/skills/${imageFile})`;
+    assert.equal(readme.split(markdown).length - 1, 1, `README must display dedicated image exactly once: ${imageFile}`);
+    const heading = `#### ${skillName}`;
+    const headingIndexes = visibleReadmeLines.flatMap((line, index) => line === heading ? [index] : []);
+    assert.equal(headingIndexes.length, 1, `README must contain exactly one visible heading for the Skill: ${skillName}`);
+    const nextContentLine = visibleReadmeLines.slice(headingIndexes[0] + 1).find((line) => line.trim() !== "");
+    assert.equal(nextContentLine, markdown, `README must display the image directly below its matching Skill heading: ${imageFile}`);
+  }
+
+  const expectedNumbers = Array.from({ length: imageFiles.length }, (_, index) => index + 1);
+  assert.deepEqual(imageNumbers.sort((a, b) => a - b), expectedNumbers, "dedicated image numbers must be unique and contiguous from 01");
+  assert.deepEqual(coveredNames.sort(), sourceSkillNames, "every skill must have exactly one dedicated PNG");
 });
 
 console.log(`\nRESULT PASS ${pass} FAIL ${fail} TOTAL ${pass + fail}`);
